@@ -10,13 +10,16 @@ import {
   AppBar,
   Toolbar,
   Card,
-  CardContent
+  CardContent,
+  Switch,
+  FormControlLabel
 } from '@mui/material';
 import { 
   LiveTv as LiveTvIcon, 
   Repeat as RepeatIcon,
   Share as ShareIcon,
-  TheaterComedy as ComedyIcon
+  TheaterComedy as ComedyIcon,
+  ToggleOn as ToggleIcon
 } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 
@@ -97,8 +100,8 @@ const defaultTheme = {
 };
 
 export default function Home() {
-  // Mock data for demonstration - change isLive to test different states
-  const isLive = false; 
+  // State for testing - now controlled by toggle
+  const [isLive, setIsLive] = useState(false);
   const showDate = "December 22, 2024";
   const host = "Timothée Chalamet";
   const musicalGuest = "Gracie Abrams";
@@ -141,6 +144,26 @@ export default function Home() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             SNL Live Checker
           </Typography>
+          
+          {/* Testing Toggle */}
+          <FormControlLabel
+            control={
+              <Switch
+                checked={isLive}
+                onChange={(e) => setIsLive(e.target.checked)}
+                color="secondary"
+              />
+            }
+            label={
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <ToggleIcon />
+                <Typography variant="body2">
+                  {isLive ? 'LIVE' : 'RERUN'}
+                </Typography>
+              </Box>
+            }
+            sx={{ color: 'white' }}
+          />
         </Toolbar>
       </AppBar>
 
@@ -341,11 +364,17 @@ export default function Home() {
             </Typography>
           </Box>
 
-          {/* Demo Toggle Button */}
+          {/* Demo Instructions */}
           <Box sx={{ textAlign: 'center', mt: 2 }}>
-            <Typography variant="caption" color="text.secondary">
-              💡 Change `isLive` in the code to see different themed states!
-            </Typography>
+            <Paper sx={{ p: 2, backgroundColor: '#f5f5f5' }}>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                🎭 <strong>Demo Mode:</strong> Use the toggle in the top-right to switch between LIVE and RERUN states!
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                • LIVE shows Timothée Chalamet's themed experience with custom colors & catchphrases<br/>
+                • RERUN shows rotating SNL jokes that change every 5 seconds
+              </Typography>
+            </Paper>
           </Box>
         </Box>
       </Container>
