@@ -95,10 +95,10 @@ async function getSNLSeriesInfo(): Promise<Record<string, unknown>> {
 /**
  * Gets current season episodes from TMDB
  */
-async function getCurrentSeasonEpisodes(seasonNumber: number): Promise<TMDBResponse[]> {
+async function getCurrentSeasonEpisodes(seasonNumber: number): Promise<Record<string, unknown>[]> {
   try {
     const data = await fetchTMDBData(`/tv/${SNL_SERIES_ID}/season/${seasonNumber}`);
-    return (data.episodes as TMDBResponse[]) || [];
+    return (data.episodes as Record<string, unknown>[]) || [];
   } catch (error) {
     console.error('Error getting current season episodes:', error);
     return [];
@@ -108,10 +108,10 @@ async function getCurrentSeasonEpisodes(seasonNumber: number): Promise<TMDBRespo
 /**
  * Gets specific episode details from TMDB
  */
-async function getEpisodeDetails(seasonNumber: number, episodeNumber: number): Promise<TMDBResponse | null> {
+async function getEpisodeDetails(seasonNumber: number, episodeNumber: number): Promise<Record<string, unknown> | null> {
   try {
     const data = await fetchTMDBData(`/tv/${SNL_SERIES_ID}/season/${seasonNumber}/episode/${episodeNumber}`);
-    return data as TMDBResponse;
+    return data;
   } catch (error) {
     console.error('Error getting episode details:', error);
     return null;
