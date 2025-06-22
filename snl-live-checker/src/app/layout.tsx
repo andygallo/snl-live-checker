@@ -3,6 +3,9 @@ import "./globals.css";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { SWRProvider } from "./components/SWRProvider";
 import { SNLProvider } from "../context";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata: Metadata = {
   title: "SNL Live Checker - Is Saturday Night Live Live Tonight?",
@@ -26,9 +29,23 @@ export default function RootLayout({
       <body className="antialiased">
         <SWRProvider>
           <SNLProvider>
-            <ThemeProvider>
-              {children}
-            </ThemeProvider>
+            <ErrorBoundary>
+              <ThemeProvider>
+                {children}
+                <ToastContainer
+                  position="top-right"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="light"
+                />
+              </ThemeProvider>
+            </ErrorBoundary>
           </SNLProvider>
         </SWRProvider>
       </body>
