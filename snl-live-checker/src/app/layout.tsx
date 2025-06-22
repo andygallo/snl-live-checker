@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "./components/ThemeProvider";
+import { SWRProvider } from "./components/SWRProvider";
 
 export const metadata: Metadata = {
   title: "SNL Live Checker - Is Saturday Night Live Live Tonight?",
@@ -22,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        <SWRProvider>
+          <ThemeProvider>
+            {children}
+          </ThemeProvider>
+        </SWRProvider>
       </body>
     </html>
   );
