@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+/* SNL Live Checker Custom Theme Variables */
+:root {
+  --background: #fafafa;
+  --foreground: #212121;
+  --primary: #1976d2;
+  --secondary: #dc004e;
+  --success: #4caf50;
+  --warning: #ff9800;
+  --snl-live-gradient: linear-gradient(135deg, #4caf50 0%, #81c784 100%);
+  --snl-rerun-gradient: linear-gradient(135deg, #ff9800 0%, #ffb74d 100%);
+}
+
+@theme inline {
+  /* Material Design Colors for Tailwind */
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  /* Material Design Spacing Scale */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  
+  /* Material Design Typography */
+  --font-sans: "Roboto", "Helvetica", "Arial", sans-serif;
+  --font-mono: "Roboto Mono", monospace;
+  
+  /* Material Design Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+/* Material Design 3 Elevation Shadows */
+@layer utilities {
+  .elevation-1 {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  }
+  
+  .elevation-2 {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  }
+  
+  .elevation-3 {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  }
+  
+  /* SNL-specific utilities */
+  .gradient-live {
+    background: var(--snl-live-gradient);
+  }
+  
+  .gradient-rerun {
+    background: var(--snl-rerun-gradient);
+  }
+  
+  .text-friendly {
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  
+  /* Washington Mutual ATM style - friendly and approachable */
+  .tone-friendly {
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+}
+
+/* Reset body styles to work with Material-UI */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background: var(--background);
+  color: var(--foreground);
+  line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #121212;
+    --foreground: #ffffff;
+  }
+}
+
+/* Custom SNL Utilities */
+.snl-live-gradient {
+  background: var(--snl-live-gradient);
+}
+
+.snl-rerun-gradient {
+  background: var(--snl-rerun-gradient);
+}
+
+.snl-shadow {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.snl-shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Smooth Material-UI integration */
+.MuiButton-root {
+  text-transform: none !important; /* Override MUI default uppercase */
+}
+
+.snl-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.snl-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Custom animations */
+@keyframes snl-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.snl-pulse {
+  animation: snl-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Responsive utilities */
+@screen sm {
+  .snl-mobile-padding {
+    padding: 1rem;
+  }
+}
+
+@screen md {
+  .snl-desktop-padding {
+    padding: 2rem;
+  }
+}
