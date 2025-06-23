@@ -218,7 +218,61 @@
           2
         ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set up Supabase project and install dependencies",
+            "description": "Initialize the Supabase project and install necessary dependencies including supabase-js",
+            "dependencies": [],
+            "details": "Create a new Supabase project, obtain API keys, and install supabase-js (v2.24.0 or latest) in the project. Set up environment variables for Supabase URL and API key.",
+            "status": "in-progress",
+            "testStrategy": "Verify Supabase connection by making a test query to the database"
+          },
+          {
+            "id": 2,
+            "title": "Implement sign-up and login functionality",
+            "description": "Create sign-up and login forms using MUI components and integrate with Supabase Auth",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop sign-up and login forms using MUI components. Implement form validation and error handling. Use Supabase Auth methods for user registration and authentication.",
+            "status": "pending",
+            "testStrategy": "Test user registration and login with valid and invalid credentials"
+          },
+          {
+            "id": 3,
+            "title": "Create and manage user preferences",
+            "description": "Set up user preferences table in Supabase and implement CRUD operations",
+            "dependencies": [
+              2
+            ],
+            "details": "Create a 'user_preferences' table in Supabase. Implement functions to create, read, update, and delete user preferences. Ensure proper data validation and error handling.",
+            "status": "pending",
+            "testStrategy": "Perform CRUD operations on user preferences and verify data integrity"
+          },
+          {
+            "id": 4,
+            "title": "Develop preference management UI",
+            "description": "Create a user interface for managing preferences using MUI components",
+            "dependencies": [
+              3
+            ],
+            "details": "Design and implement a user-friendly interface for viewing and editing preferences. Use MUI components for consistency with the overall design. Implement real-time updates using Supabase subscriptions.",
+            "status": "pending",
+            "testStrategy": "Test UI responsiveness and real-time updates of preference changes"
+          },
+          {
+            "id": 5,
+            "title": "Implement secure session management",
+            "description": "Set up secure session handling and token refresh mechanism",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement secure storage of session tokens. Set up automatic token refresh to maintain user sessions. Handle session expiration and logout functionality. Optionally, add social login options for Google and Facebook.",
+            "status": "pending",
+            "testStrategy": "Test session persistence across page reloads and automatic token refresh"
+          }
+        ]
       },
       {
         "id": 5,
@@ -387,7 +441,7 @@
     ],
     "metadata": {
       "created": "2025-06-22T22:38:38.083Z",
-      "updated": "2025-06-23T01:09:26.767Z",
+      "updated": "2025-06-23T01:17:52.870Z",
       "description": "Tasks for master context"
     }
   }
