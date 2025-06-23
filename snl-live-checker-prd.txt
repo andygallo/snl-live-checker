@@ -64,10 +64,25 @@ Users visit the site **any day of the week** to instantly know:
    - Auto-refresh capabilities
    - Error handling for data sources
 
-### Data Sources
-- **Primary**: NBC's official SNL schedule
-- **Secondary**: TV guide APIs (TVMaze, TMDB)
-- **Fallback**: Manual admin updates
+### Data Sources Strategy
+**Primary Data Sources (Automated APIs Only):**
+- **TVMaze API**: Free, reliable TV schedule API with comprehensive SNL data
+- **TMDB (The Movie Database)**: Entertainment database with show schedules and cast info
+- **TV Guide API**: Professional TV listings service with real-time updates
+
+**Data Requirements:**
+- Real-time SNL schedule from TV guide APIs
+- Host and musical guest information with photos
+- Episode history and numbering (live vs rerun detection)
+- Season break schedules and return dates
+- Cross-reference multiple APIs for accuracy
+- Automated daily refresh cycle
+
+**No Manual Fallbacks:**
+- No admin interface for manual data entry
+- No manual schedule updates required
+- Fully automated data pipeline
+- APIs handle all edge cases (breaks, holidays, special episodes)
 
 ### User Experience
 - **Load Time**: < 2 seconds
@@ -100,6 +115,7 @@ Users visit the site **any day of the week** to instantly know:
 
 ### Phase 2: Enhanced Experience 🔄
 - [ ] **Multi-day logic (upcoming Saturday feature)**
+- [ ] **TV Guide API integration (primary data source)**
 - [ ] Social sharing system
 - [ ] PWA implementation
 
@@ -115,22 +131,52 @@ Users visit the site **any day of the week** to instantly know:
 - **Framework**: Next.js 15 with TypeScript
 - **UI**: Material-UI (MUI) + Tailwind CSS
 - **State Management**: React Context + SWR
+- **Data Sources**: TVMaze API, TMDB API, TV Guide API
 - **Deployment**: Vercel (static export)
-- **APIs**: NBC SNL data, TVMaze, TMDB
 
 ---
 
 ## Risk Mitigation
 
 ### Data Reliability
-- **Multiple Sources**: Primary + secondary + fallback
+- **Multiple API Sources**: TVMaze + TMDB + TV Guide for redundancy
 - **Caching Strategy**: SWR with stale-while-revalidate
-- **Error Handling**: Graceful degradation
+- **Error Handling**: Graceful degradation between APIs
+- **API Rate Limits**: Proper throttling and caching to stay within limits
 
 ### Performance
 - **Static Generation**: Next.js static export
 - **CDN**: Vercel global distribution
 - **Optimization**: Image optimization, code splitting
+- **API Caching**: Minimize API calls through intelligent caching
+
+### API Dependencies
+- **Free Tier Management**: Stay within free API limits
+- **Backup APIs**: Multiple sources prevent single point of failure
+- **Monitoring**: Track API health and response times
+- **Graceful Degradation**: Show cached data if APIs are temporarily unavailable
+
+---
+
+## API Integration Details
+
+### TVMaze API (Primary)
+- **Endpoint**: `/shows/{show-id}/episodes`
+- **Data**: Episode schedules, live vs rerun status
+- **Rate Limit**: No authentication required, generous limits
+- **Reliability**: High uptime, comprehensive TV data
+
+### TMDB API (Secondary)
+- **Endpoint**: `/tv/{series-id}/season/{season-number}/episode/{episode-number}`
+- **Data**: Cast information, episode details, images
+- **Rate Limit**: Free tier with API key
+- **Reliability**: Excellent for cast/crew information
+
+### TV Guide API (Tertiary)
+- **Endpoint**: Custom TV listings endpoints
+- **Data**: Real-time TV schedule verification
+- **Rate Limit**: Varies by provider
+- **Reliability**: Professional-grade TV listings
 
 ---
 
@@ -144,4 +190,4 @@ Users visit the site **any day of the week** to instantly know:
 ---
 
 **Last Updated**: December 2024  
-**Version**: 2.0 (Ultra-Simplified + Multi-Day Enhancement) 
+**Version**: 3.0 (TV Guide API Primary + No Manual Fallbacks) 

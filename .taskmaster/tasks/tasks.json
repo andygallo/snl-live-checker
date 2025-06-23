@@ -291,11 +291,25 @@
         ],
         "priority": "high",
         "subtasks": []
+      },
+      {
+        "id": 18,
+        "title": "Integrate TV Guide APIs for Automated SNL Schedule Data",
+        "description": "Implement a multi-source API integration system using TVMaze, TMDB, and TV Guide APIs to fully automate SNL schedule data collection with fallback mechanisms and intelligent caching.",
+        "details": "1. Set up API integration architecture:\n   - Create a service layer for each API provider (TVMaze, TMDB, TV Guide)\n   - Implement adapter pattern to normalize data from different sources\n   - Establish clear hierarchy: TVMaze (primary) → TMDB (secondary) → TV Guide (tertiary)\n\n2. Implement TVMaze API integration:\n   - Use `/schedule` endpoint with appropriate filters for SNL content\n   - Extract episode information, air dates, and guest information\n   - Handle pagination for historical data\n\n3. Implement TMDB API integration:\n   - Configure authentication using API keys\n   - Use TV show endpoints to fetch SNL information\n   - Map response data to application schema\n\n4. Implement TV Guide API integration:\n   - Set up authentication and API key management\n   - Create endpoints to fetch schedule information\n   - Parse and normalize response data\n\n5. Develop fallback and error handling system:\n   - Implement circuit breaker pattern to handle API failures\n   - Create graceful degradation logic to fall back to secondary/tertiary sources\n   - Log detailed error information for monitoring\n\n6. Implement rate limiting and request optimization:\n   - Add request throttling to respect API rate limits\n   - Batch requests where possible to minimize API calls\n   - Implement exponential backoff for retries\n\n7. Create intelligent caching system:\n   - Leverage Redis cache from Task 12\n   - Implement tiered caching strategy with different TTLs based on data type\n   - Set up cache invalidation triggers for schedule updates\n\n8. Develop API health monitoring:\n   - Create health check endpoints for each API provider\n   - Implement automated alerts for API failures\n   - Track API response times and error rates\n\n9. Remove manual data entry dependencies:\n   - Refactor existing code to use the new automated data pipeline\n   - Create data migration scripts for existing manual data\n   - Update UI components to work with the new data structure\n\n10. Implement data reconciliation logic:\n    - Create algorithms to resolve conflicts between different data sources\n    - Implement confidence scoring for data accuracy\n    - Set up automated data quality checks",
+        "testStrategy": "1. Unit testing:\n   - Test each API service in isolation with mock responses\n   - Verify adapter functions correctly normalize data\n   - Test error handling and fallback mechanisms\n   - Validate rate limiting and throttling logic\n\n2. Integration testing:\n   - Test the complete data pipeline with real API endpoints\n   - Verify fallback behavior when primary sources fail\n   - Test cache hit/miss scenarios and TTL expiration\n   - Validate data reconciliation between multiple sources\n\n3. Performance testing:\n   - Measure API response times and optimize slow requests\n   - Test system under high load conditions\n   - Verify caching effectiveness with metrics\n   - Benchmark memory and CPU usage during data processing\n\n4. Reliability testing:\n   - Simulate API outages and verify system resilience\n   - Test recovery after prolonged downtime\n   - Verify monitoring alerts trigger appropriately\n   - Test data consistency across API failures\n\n5. End-to-end testing:\n   - Verify UI components display data correctly from all sources\n   - Test the complete user journey with automated data\n   - Validate schedule information accuracy against known data\n   - Test edge cases like schedule changes and special episodes",
+        "status": "pending",
+        "dependencies": [
+          2,
+          12
+        ],
+        "priority": "high",
+        "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-06-22T22:38:38.083Z",
-      "updated": "2025-06-23T04:26:40.104Z",
+      "updated": "2025-06-23T04:28:57.812Z",
       "description": "Tasks for master context"
     }
   }
