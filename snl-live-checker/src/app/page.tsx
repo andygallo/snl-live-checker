@@ -102,31 +102,40 @@ export default function Home() {
   // Use next show date from schedule if available
   const enhancedNextSNLDate = nextShow?.date || nextSNLDate;
 
-  // Update context with fetched data
+  // Update context with fetched data (optimized to prevent unnecessary updates)
   useEffect(() => {
-    if (snlData) {
+    if (snlData && snlData !== state.snlData) {
       setSNLData(snlData);
     }
-    if (scheduleData) {
+  }, [snlData, setSNLData, state.snlData]);
+
+  useEffect(() => {
+    if (scheduleData && scheduleData !== state.schedule) {
       setSchedule(scheduleData);
     }
-  }, [snlData, scheduleData, setSNLData, setSchedule]);
+  }, [scheduleData, setSchedule, state.schedule]);
 
-  // Handle loading states
+  // Handle loading states (debounced)
   useEffect(() => {
-    setLoading(snlLoading || scheduleLoading);
-  }, [snlLoading, scheduleLoading, setLoading]);
-
-  // Handle errors
-  useEffect(() => {
-    if (snlError) {
-      setError(`SNL Data Error: ${snlError.message}`);
-    } else if (scheduleError) {
-      setError(`Schedule Error: ${scheduleError.message}`);
-    } else {
-      setError(null);
+    const currentLoading = snlLoading || scheduleLoading;
+    if (currentLoading !== state.isLoading) {
+      setLoading(currentLoading);
     }
-  }, [snlError, scheduleError, setError]);
+  }, [snlLoading, scheduleLoading, setLoading, state.isLoading]);
+
+  // Handle errors (optimized)
+  useEffect(() => {
+    let errorMessage = null;
+    if (snlError) {
+      errorMessage = `SNL Data Error: ${snlError.message}`;
+    } else if (scheduleError) {
+      errorMessage = `Schedule Error: ${scheduleError.message}`;
+    }
+    
+    if (errorMessage !== state.error) {
+      setError(errorMessage);
+    }
+  }, [snlError, scheduleError, setError, state.error]);
 
   useEffect(() => {
     setMounted(true);

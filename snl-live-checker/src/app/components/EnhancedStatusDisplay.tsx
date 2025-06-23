@@ -114,24 +114,9 @@ export const EnhancedStatusDisplay: React.FC<EnhancedStatusDisplayProps> = ({
 
   useEffect(() => {
     setMounted(true);
-    const updateDayInfo = () => {
-      const newDayInfo = getDayDetectionInfo();
-      setDayInfo(prevDayInfo => {
-        // Only update if the day has actually changed to prevent unnecessary re-renders
-        if (!prevDayInfo || 
-            prevDayInfo.dayName !== newDayInfo.dayName || 
-            prevDayInfo.upcomingSaturday.toDateString() !== newDayInfo.upcomingSaturday.toDateString()) {
-          return newDayInfo;
-        }
-        return prevDayInfo;
-      });
-    };
-    
-    updateDayInfo();
-    // Reduce update frequency to every 60 seconds instead of every second
-    const interval = setInterval(updateDayInfo, 60000);
-    
-    return () => clearInterval(interval);
+    // Initialize day info once
+    const initialDayInfo = getDayDetectionInfo();
+    setDayInfo(initialDayInfo);
   }, []);
 
   if (!mounted || !dayInfo) {
@@ -226,7 +211,7 @@ export const EnhancedStatusDisplay: React.FC<EnhancedStatusDisplayProps> = ({
               {isLive ? "Time Remaining:" : "Countdown:"}
             </Typography>
             <Countdown
-              key={dayInfo.upcomingSaturday.toDateString()}
+              key={`countdown-${dayInfo.upcomingSaturday.toDateString()}`}
               date={isLive ? new Date(dayInfo.upcomingSaturday.getTime() + 90 * 60 * 1000) : dayInfo.upcomingSaturday}
               renderer={(props) => <EnhancedCountdownRenderer {...props} dayInfo={dayInfo} />}
               intervalDelay={1000}

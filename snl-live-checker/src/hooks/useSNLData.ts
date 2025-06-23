@@ -31,17 +31,14 @@ export const useSNLData = (): UseSNLDataResult => {
     '/api/snl',
     fetcher,
     {
-      refreshInterval: 30 * 60 * 1000, // 30 minutes
-      revalidateOnFocus: false, // Disable to prevent sync issues
-      revalidateOnReconnect: true,
-      dedupingInterval: 5 * 60 * 1000, // 5 minutes
-      errorRetryCount: 2, // Reduce retry count
-      errorRetryInterval: 3000,
+      refreshInterval: 0, // Disable automatic refresh to prevent rendering conflicts
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      revalidateOnMount: true, // Only fetch on initial mount
+      dedupingInterval: 30 * 60 * 1000, // 30 minutes
+      errorRetryCount: 0, // Disable retries
       keepPreviousData: true,
-      shouldRetryOnError: (error) => {
-        // Simplified error handling
-        return false; // Don't retry to prevent sync issues
-      },
+      shouldRetryOnError: () => false,
     }
   );
 
@@ -60,9 +57,12 @@ export const useSNLData = (): UseSNLDataResult => {
  */
 export const useScheduleData = () => {
   return useSWR('/api/schedule', fetcher, {
-    refreshInterval: 15 * 60 * 1000, // 15 minutes
-    revalidateOnFocus: false, // Disable to prevent sync issues
-    shouldRetryOnError: () => false, // Don't retry
+    refreshInterval: 0, // Disable automatic refresh
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    revalidateOnMount: true,
+    errorRetryCount: 0,
+    shouldRetryOnError: () => false,
     keepPreviousData: true,
   });
 };

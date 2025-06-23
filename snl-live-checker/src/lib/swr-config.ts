@@ -29,17 +29,15 @@ export const swrConfig: SWRConfiguration = {
   // Dedupe requests within 5 minutes
   dedupingInterval: 5 * 60 * 1000, // 5 minutes
   
-  // Retry failed requests up to 3 times
-  errorRetryCount: 3,
+  // Disable retries to prevent concurrent rendering conflicts
+  errorRetryCount: 0,
   
   // Exponential backoff for retries
-  errorRetryInterval: 2000, // Start with 2 seconds
+  errorRetryInterval: 5000, // 5 seconds
   
-  // Disable focus revalidation to prevent sync issues
+  // Disable all focus/reconnect revalidation to prevent sync issues
   revalidateOnFocus: false,
-  
-  // Revalidate when network connection is restored
-  revalidateOnReconnect: true,
+  revalidateOnReconnect: false,
   
   // Don't revalidate if data is less than 10 minutes old
   revalidateIfStale: false,
@@ -60,13 +58,8 @@ export const swrConfig: SWRConfiguration = {
     lastUpdated: null,
   },
   
-  // Custom error handling (simplified to prevent sync issues)
-  onError: (error, key) => {
-    // Only log errors in development to prevent console spam
-    if (process.env.NODE_ENV === 'development') {
-      console.error('SWR Error:', error.message, 'Key:', key);
-    }
-  },
+  // Disable error callbacks to prevent concurrent rendering issues
+  onError: undefined,
   
   // Loading timeout (30 seconds)
   loadingTimeout: 30000,
