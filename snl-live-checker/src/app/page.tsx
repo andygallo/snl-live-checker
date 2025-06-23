@@ -7,13 +7,21 @@ import {
   HostGuestInfo, 
   TestModeToggle, 
   RetroBackground, 
-  SNLLogo 
+  SNLLogo,
+  LoadingSkeleton 
 } from './components';
+import { useSNLData, useScheduleData } from '../hooks/useSNLData';
+import { useSNLContext } from '../context/SNLContext';
 
 export default function Home() {
   const [isTestMode, setIsTestMode] = useState(false);
   const [, setCurrentTime] = useState(new Date());
   const [mounted, setMounted] = useState(false);
+  
+  // Real-time data fetching
+  const { data: snlData, error: snlError, isLoading: snlLoading, mutate: mutateSNL } = useSNLData();
+  const { data: scheduleData, error: scheduleError, isLoading: scheduleLoading } = useScheduleData();
+  const { state, setSNLData, setSchedule, setError, setLoading } = useSNLContext();
 
   // Get next Saturday 11:30 PM ET
   const getNextSNLDate = () => {
@@ -56,7 +64,40 @@ export default function Home() {
     return false;
   };
 
-  const isLive = isTestMode || isCurrentlyLive();
+  // Determine live status - use real data if available, fallback to time-based detection
+  const isLiveFromData = state.snlData?.isLive ?? null;
+  const isLiveFromTime = isCurrentlyLive();
+  const isLive = isTestMode || isLiveFromData ?? isLiveFromTime;
+  
+  // Get host and musical guest from real data or fallback
+  const currentHost = state.host?.name || state.snlData?.host?.name || "Timothée Chalamet";
+  const currentMusicalGuest = state.musicalGuest?.name || state.snlData?.musicalGuest?.name || "Boygenius";
+
+  // Update context with fetched data
+  useEffect(() => {
+    if (snlData) {
+      setSNLData(snlData);
+    }
+    if (scheduleData) {
+      setSchedule(scheduleData);
+    }
+  }, [snlData, scheduleData, setSNLData, setSchedule]);
+
+  // Handle loading states
+  useEffect(() => {
+    setLoading(snlLoading || scheduleLoading);
+  }, [snlLoading, scheduleLoading, setLoading]);
+
+  // Handle errors
+  useEffect(() => {
+    if (snlError) {
+      setError(`SNL Data Error: ${snlError.message}`);
+    } else if (scheduleError) {
+      setError(`Schedule Error: ${scheduleError.message}`);
+    } else {
+      setError(null);
+    }
+  }, [snlError, scheduleError, setError]);
 
   useEffect(() => {
     setMounted(true);
