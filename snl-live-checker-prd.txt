@@ -3,226 +3,145 @@
 ## Executive Summary
 
 **Product Name:** SNL Live Checker  
-**Vision:** The simplest possible web app that instantly tells comedy enthusiasts whether Saturday Night Live is live tonight or a rerun, with easy social sharing.
+**Vision:** The simplest possible web app that instantly tells comedy enthusiasts whether Saturday Night Live is live tonight or a rerun, with easy social sharing. **Works 7 days a week** by showing upcoming Saturday information when visited on non-Saturday days.
 
 **Target Audience:** Comedy enthusiasts who want to know whether to stay in for live SNL or make other Saturday night plans.
 
-**Core Value Proposition:** Never miss a live SNL show again, and never waste time on a rerun when you could be out having fun.
+**Core Value Proposition:** Never miss a live SNL show again, and never waste time on a rerun when you could be out having fun. **Get SNL information any day of the week.**
 
 ---
 
 ## Product Overview
 
 ### Primary Use Case
-Users visit the site on Saturday (or any day) to instantly know:
-- Is SNL live tonight or a rerun?
+Users visit the site **any day of the week** to instantly know:
+- **On Saturday**: Is SNL live tonight or a rerun?
+- **Sunday-Friday**: When is the next SNL? Is it live or a rerun?
 - Who's hosting and who's the musical guest?
-- When is the next live show if it's currently a rerun or on break?
+- How much time until the next live show?
 
-### Key Success Metrics
-- Weekly active users checking on Saturdays
-- Social shares of "watching live tonight" posts
-- Time spent on site (should be low - users get answer quickly)
+### Key Features
 
----
+#### 1. **Smart Day Detection & Messaging**
+- **Saturday visits**: "SNL is LIVE tonight!" or "SNL is a rerun tonight"
+- **Non-Saturday visits**: "Next SNL: Saturday [date] - LIVE/RERUN"
+- Clear distinction between "tonight" and "upcoming Saturday"
 
-## Core Features
+#### 2. **Instant Status Display**
+- Large, clear visual indicator (LIVE/RERUN)
+- Host and musical guest information
+- **Countdown timer**: 
+  - Saturday: Time until show starts (8:30 PM ET)
+  - Other days: Time until next Saturday's show
 
-### 1. Live Status Display
-**Primary Screen Elements:**
-- Large, clear indicator: "SNL IS LIVE TONIGHT!" or "Rerun Tonight"
-- Friendly, Washington Mutual ATM-style tone throughout
-- Current date and time for context
-- Show time reminder (11:30 PM ET)
+#### 3. **Social Sharing**
+- One-click sharing to social media
+- Pre-generated graphics with show information
+- Shareable text snippets
 
-**Live Show Information:**
-- Host name with professional headshot
-- "Have they hosted before?" with count (e.g., "3rd time hosting")
-- Musical guest name with promotional photo
-- Brief, fun fact about host's previous SNL appearances if applicable
-
-**Rerun Information:**
-- Which episode is airing (date, host, musical guest from original)
-- "Next live show" countdown or date
-- Encouraging message like "Perfect night to go out!"
-
-### 2. Break Handling
-**During SNL Season Breaks:**
-- Clear message: "SNL is on break"
-- Return date with countdown timer
-- Friendly message: "SNL returns on [date] - check back then!"
-
-### 3. Social Sharing System
-**Custom Graphics Generation:**
-- Auto-generated shareable images featuring:
-  - Host and musical guest photos
-  - "I'm watching SNL LIVE tonight!" or similar text
-  - Random classic SNL joke/quote from past episodes
-  - Branded with subtle SNL Live Checker logo
-
-**Sharing Options:**
-- One-click sharing to major social platforms
-- Copy link functionality
-- Download image option
-
-### 4. Multi-Source Data Integration
-**Primary Data Sources:**
-- **TVMaze API**: Free, reliable TV schedule API with SNL data
-- **TMDB (The Movie Database)**: Comprehensive entertainment database
-- **TV Guide API**: Professional TV listings service
-- **JustWatch API**: Streaming and TV schedule information
-
-**Data Requirements:**
-- Real-time SNL schedule from multiple sources
-- Host and musical guest information with photos
-- Episode history and numbering
-- Season break schedules
-- Cross-reference multiple sources for accuracy
-- Daily refresh cycle (check once per day)
-
-**Fallback Strategy:**
-- Automatic failover between data sources
-- Wikipedia scraping as last resort backup
+#### 4. **Progressive Web App**
+- Works offline with cached data
+- Install on phone home screen
+- Fast loading and responsive
 
 ---
 
 ## Technical Requirements
 
-### Platform
-- **Static Web Application**: Built with Next.js but deployable as simple HTML/CSS/JS
-- **One-Click Deployment**: Using platforms like Vercel, Netlify, or GitHub Pages
-- **Google Material Design**: Clean, modern UI using Material Design 3 components
-- **Mobile-First Responsive**: Works perfectly on all devices
-- **Progressive Web App (PWA)**: Can be "installed" on phones like a native app
+### Core Functionality
+1. **Multi-Day Data Fetching**
+   - Current Saturday status
+   - Upcoming Saturday information
+   - Season schedule awareness
+
+2. **Day Logic Implementation**
+   - JavaScript Date() detection
+   - Days-until-Saturday calculation
+   - Appropriate messaging system
+
+3. **Real-time Updates**
+   - SWR for data fetching
+   - Auto-refresh capabilities
+   - Error handling for data sources
 
 ### Data Sources
-- **Primary**: TV Guide API or TMDB (The Movie Database) for reliable TV schedules
-- **Secondary**: Entertainment databases like TVMaze API (free and reliable)
-- **Tertiary**: IMDb datasets or Rotten Tomatoes listings
-- **Backup**: Wikipedia scraping as last resort backup
+- **Primary**: NBC's official SNL schedule
+- **Secondary**: TV guide APIs (TVMaze, TMDB)
+- **Fallback**: Manual admin updates
 
-### Performance Requirements
-- 99.9% uptime during SNL season
-- Sub-2 second page load times
-- Reliable data accuracy
-
----
-
-## User Experience Flow
-
-### First-Time Visitor
-1. Lands on homepage with immediate live/rerun status
-2. Sees host/guest information clearly displayed
-3. Optional: Share status to social media
-
-### Returning User
-1. Quick status confirmation
-2. Share with friends if live
-3. Use information to make evening plans
-
-### Saturday Evening Check
-1. Quick status confirmation
-2. Share with friends if live
-3. Use information to make evening plans
+### User Experience
+- **Load Time**: < 2 seconds
+- **Mobile-first**: Responsive design
+- **Accessibility**: WCAG 2.1 AA compliance
+- **Browser Support**: Modern browsers (Chrome, Firefox, Safari, Edge)
 
 ---
 
-## Content Strategy
+## Success Metrics
 
-### Tone and Voice
-- Friendly and approachable (Washington Mutual ATM style)
-- Enthusiastic about live shows
-- Understanding about reruns ("Great night to go out!")
-- Nostalgic references to classic SNL moments
+### Primary KPIs
+- **Weekly Active Users**: Target 1,000+ within 3 months
+- **Social Shares**: 50+ shares per live episode
+- **Return Usage**: 30%+ users return within 7 days
 
-### SNL Jokes/References Integration
-- Curated database of classic SNL quotes and references
-- Rotation system to keep content fresh
-- Context-appropriate jokes (family-friendly)
-- Attribution to original sketches/cast members
+### User Behavior
+- **Saturday Peak**: Highest traffic on Saturday evenings
+- **Weekly Engagement**: Consistent daily traffic for upcoming show info
+- **Share Rate**: 10%+ of visitors share content
 
 ---
 
-## Launch Strategy
+## Development Phases
 
-### Phase 1: MVP Launch (Ultra-Simple)
-- Clean Material Design 3 interface
-- Core live/rerun detection with multiple data sources
-- Basic host/guest information with photos
-- Simple social sharing with pre-designed graphics
+### Phase 1: Core Functionality ✅
+- [x] Basic SNL status checking
+- [x] Data fetching and state management  
+- [x] Main status display
 
-### Phase 2: Enhanced Features
-- Custom graphics generation with Material Design styling
-- Enhanced social sharing options
-- Historical data integration and trends
+### Phase 2: Enhanced Experience 🔄
+- [ ] **Multi-day logic (upcoming Saturday feature)**
+- [ ] Social sharing system
+- [ ] PWA implementation
 
-### Phase 3: Growth Optimization
-- Enhanced social features
-- Seasonal special events and themes
-- Performance optimizations
-
----
-
-## Success Criteria
-
-### Month 1 Goals
-- 1,000+ unique visitors
-- 100+ social shares
-- Accurate live/rerun detection
-
-### Month 3 Goals
-- 10,000+ unique visitors
-- 1,000+ weekly social shares
-- Media mentions in comedy/entertainment blogs
-
-### Long-term Vision
-- The go-to resource for SNL viewers
-- 50,000+ weekly active users during SNL season
-- Partnership opportunities with NBC/comedy platforms
-- Expansion to other live comedy shows
+### Phase 3: Optimization 📈
+- [ ] SEO optimization
+- [ ] Performance enhancements
+- [ ] Accessibility improvements
 
 ---
 
-## Technical Architecture
+## Technical Stack
 
-### Frontend
-- **Next.js with Static Export**: Modern React framework that builds to static files
-- **Google Material Design 3**: Using Material-UI (MUI) component library
-- **Tailwind CSS**: For custom styling and responsive design
-- **PWA Kit**: Service worker for offline capability and app-like experience
-- **Social Sharing APIs**: Pre-built integrations for major platforms
-
-### Backend
-- **Vercel/Netlify Functions**: No server management required
-- **Static Data**: JSON files for simple data storage
-- **Cron Jobs**: Automated data refresh using platform-provided schedulers
-- **Canvas API**: Browser-based image generation for social graphics
-
-### Deployment
-- **Vercel**: Connect GitHub repo, auto-deploy on every commit
-- **Custom Domain**: Easy to connect your own domain name
-- **SSL/HTTPS**: Automatically provided by hosting platform
-- **Global CDN**: Built-in fast global distribution
+- **Framework**: Next.js 15 with TypeScript
+- **UI**: Material-UI (MUI) + Tailwind CSS
+- **State Management**: React Context + SWR
+- **Deployment**: Vercel (static export)
+- **APIs**: NBC SNL data, TVMaze, TMDB
 
 ---
 
 ## Risk Mitigation
 
-### Data Accuracy Risks
-- Multiple data source verification
-- Clear disclaimers about accuracy
-- Graceful degradation when data is unavailable
+### Data Reliability
+- **Multiple Sources**: Primary + secondary + fallback
+- **Caching Strategy**: SWR with stale-while-revalidate
+- **Error Handling**: Graceful degradation
 
-### Legal/Copyright Risks
-- Fair use compliance for SNL references
-- Proper photo attribution and licensing
-- NBC relationship management
-
-### Technical Risks
-- Redundant hosting infrastructure
-- Graceful degradation for API failures
-- Regular backup and recovery testing
+### Performance
+- **Static Generation**: Next.js static export
+- **CDN**: Vercel global distribution
+- **Optimization**: Image optimization, code splitting
 
 ---
 
-This ultra-simplified PRD focuses purely on the core SNL checking functionality and social sharing, creating the fastest possible path to a working prototype. 
+## Future Considerations (Post-MVP)
+
+- Push notifications for live shows
+- Historical SNL data and trivia
+- Integration with streaming services
+- Community features (ratings, discussions)
+
+---
+
+**Last Updated**: December 2024  
+**Version**: 2.0 (Ultra-Simplified + Multi-Day Enhancement) 
