@@ -115,11 +115,21 @@ export const EnhancedStatusDisplay: React.FC<EnhancedStatusDisplayProps> = ({
   useEffect(() => {
     setMounted(true);
     const updateDayInfo = () => {
-      setDayInfo(getDayDetectionInfo());
+      const newDayInfo = getDayDetectionInfo();
+      setDayInfo(prevDayInfo => {
+        // Only update if the day has actually changed to prevent unnecessary re-renders
+        if (!prevDayInfo || 
+            prevDayInfo.dayName !== newDayInfo.dayName || 
+            prevDayInfo.upcomingSaturday.toDateString() !== newDayInfo.upcomingSaturday.toDateString()) {
+          return newDayInfo;
+        }
+        return prevDayInfo;
+      });
     };
     
     updateDayInfo();
-    const interval = setInterval(updateDayInfo, 1000);
+    // Reduce update frequency to every 60 seconds instead of every second
+    const interval = setInterval(updateDayInfo, 60000);
     
     return () => clearInterval(interval);
   }, []);
@@ -271,11 +281,11 @@ export const EnhancedStatusDisplay: React.FC<EnhancedStatusDisplayProps> = ({
                 {dayInfo.messaging.countdownLabel}:
               </Typography>
               <Countdown
-                key={dayInfo.upcomingSaturday.getTime()}
+                key={`countdown-${dayInfo.upcomingSaturday.toDateString()}`}
                 date={dayInfo.upcomingSaturday}
                 renderer={(props) => <EnhancedCountdownRenderer {...props} dayInfo={dayInfo} />}
-                intervalDelay={100}
-                precision={3}
+                intervalDelay={1000}
+                precision={0}
               />
             </Box>
 

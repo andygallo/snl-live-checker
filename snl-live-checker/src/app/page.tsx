@@ -17,7 +17,6 @@ import { getNextLiveShow, getCurrentShow, isCurrentlyLive as checkIsLive } from 
 
 export default function Home() {
   const [isTestMode, setIsTestMode] = useState(false);
-  const [, setCurrentTime] = useState(new Date());
   const [mounted, setMounted] = useState(false);
   
   // Real-time data fetching
@@ -111,8 +110,6 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(timer);
   }, []);
 
   // Prevent hydration mismatch by not rendering countdown until mounted
