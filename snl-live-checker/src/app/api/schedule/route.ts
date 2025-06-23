@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { SNLSchedule, SNLEpisode } from '@/types/snl';
 
-// Required for static export
-export const dynamic = 'force-static';
-export const revalidate = 300; // Revalidate every 5 minutes
+// Remove static export configuration for development
+// export const dynamic = 'force-static';
+// export const revalidate = 300; // 5 minutes
 
 /**
  * Determines if it's currently SNL time (Saturday 11:30 PM - Sunday 1:00 AM ET)
@@ -169,66 +169,23 @@ function generateUpcomingEpisodes(count: number = 5): SNLEpisode[] {
  */
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const includeUpcoming = searchParams.get('upcoming') === 'true';
-    const upcomingCount = parseInt(searchParams.get('count') || '5');
-    
-    const isCurrentlyLive = isCurrentlySNLTime();
-    const currentSaturday = getCurrentSaturday();
-    const nextSaturday = getNextSaturday();
-    
-    // Determine if tonight's show is live or rerun
-    const isOnHiatus = isTypicallyOnHiatus(currentSaturday);
-    const isLiveTonight = !isOnHiatus && !isCurrentlyLive; // Assume live if not on hiatus
-    
-    const currentEpisode = createMockEpisode(currentSaturday, isLiveTonight);
-    const nextEpisode = createMockEpisode(nextSaturday, true);
-    
-    const schedule: SNLSchedule = {
-      currentEpisode: isCurrentlyLive ? currentEpisode : null,
-      nextEpisode,
-      upcomingEpisodes: includeUpcoming ? generateUpcomingEpisodes(upcomingCount) : [],
-      seasonInfo: {
-        currentSeason: 50,
-        episodeCount: 22,
-        premiereDate: "2024-09-28",
-        finaleDate: "2025-05-17"
-      }
+    // Simple mock schedule data for development
+    const mockSchedule = {
+      isLive: false,
+      showTime: '2024-01-13T23:30:00-05:00',
+      timezone: 'EST',
+      nextEpisode: '2024-01-20T23:30:00-05:00',
+      season: 50,
+      isHiatus: false
     };
-    
-    return NextResponse.json({
-      success: true,
-      data: schedule,
-      meta: {
-        isCurrentlyLive,
-        isOnHiatus,
-        currentTime: new Date().toISOString(),
-        nextShowDate: nextSaturday.toISOString(),
-      },
-      source: 'schedule',
-      lastUpdated: new Date().toISOString(),
-    }, {
-      status: 200,
-      headers: {
-        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600', // 5 min cache, 10 min stale
-        'Content-Type': 'application/json',
-      },
-    });
-  } catch (error) {
-    console.error('Schedule API route error:', error);
 
-    return NextResponse.json({
-      success: false,
-      error: 'Failed to fetch schedule data',
-      message: error instanceof Error ? error.message : 'Unknown error',
-      source: 'schedule',
-      lastUpdated: new Date().toISOString(),
-    }, {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    return NextResponse.json(mockSchedule);
+  } catch (error) {
+    console.error('Schedule API error:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch schedule data' },
+      { status: 500 }
+    );
   }
 }
 

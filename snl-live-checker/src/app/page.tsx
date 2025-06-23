@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Countdown from 'react-countdown';
-import { Box, Typography, Switch, FormControlLabel } from '@mui/material';
+import { Box, Switch, FormControlLabel } from '@mui/material';
 
 // Retro countdown renderer
 const CountdownRenderer = ({ hours, minutes, seconds, completed }: any) => {

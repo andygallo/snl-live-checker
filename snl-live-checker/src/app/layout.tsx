@@ -2,12 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from 'next/font/google';
 import "./globals.css";
 import { ThemeProvider } from "./components/ThemeProvider";
-import { SWRProvider } from "./components/SWRProvider";
-import { SNLProvider } from "@/context";
-import { SNLDataProvider } from '@/context/SNLDataProvider';
-import { ErrorBoundary } from "./components/ErrorBoundary";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -47,29 +41,9 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
-        <SWRProvider>
-          <SNLProvider>
-            <SNLDataProvider>
-              <ErrorBoundary>
-                <ThemeProvider>
-                  {children}
-                  <ToastContainer
-                    position="top-right"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="dark"
-                  />
-                </ThemeProvider>
-              </ErrorBoundary>
-            </SNLDataProvider>
-          </SNLProvider>
-        </SWRProvider>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

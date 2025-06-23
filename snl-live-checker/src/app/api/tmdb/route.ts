@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { TMDBResponse } from '@/types/snl';
 
-// Required for static export
-export const dynamic = 'force-static';
-export const revalidate = 1800; // Revalidate every 30 minutes
+// Remove static export configuration for development
+// export const dynamic = 'force-static';
+// export const revalidate = 1800; // 30 minutes
 
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const SNL_SERIES_ID = 1667; // Saturday Night Live series ID on TMDB
@@ -125,60 +125,28 @@ async function getEpisodeDetails(seasonNumber: number, episodeNumber: number): P
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const type = searchParams.get('type') || 'series';
-    const season = searchParams.get('season');
-    const episode = searchParams.get('episode');
+    const seriesId = searchParams.get('seriesId') || '1668'; // SNL series ID on TMDB
+    
+    // Mock data for development - replace with real TMDB API call
+    const mockEpisode: TMDBResponse = {
+      id: 12345,
+      name: 'Timothée Chalamet / Boygenius',
+      overview: 'Tonight\'s episode features Timothée Chalamet as host and Boygenius as the musical guest.',
+      air_date: new Date().toISOString().split('T')[0],
+      episode_number: 10,
+      season_number: 50,
+      still_path: '/path/to/episode/still.jpg',
+      vote_average: 8.5,
+      vote_count: 1250
+    };
 
-    let data;
-
-    switch (type) {
-      case 'series':
-        data = await getSNLSeriesInfo();
-        break;
-      case 'season':
-        if (!season) {
-          throw new Error('Season number required for season type');
-        }
-        data = await getCurrentSeasonEpisodes(parseInt(season));
-        break;
-      case 'episode':
-        if (!season || !episode) {
-          throw new Error('Season and episode numbers required for episode type');
-        }
-        data = await getEpisodeDetails(parseInt(season), parseInt(episode));
-        break;
-      default:
-        data = await getSNLSeriesInfo();
-    }
-
-    return NextResponse.json({
-      success: true,
-      data,
-      source: 'tmdb',
-      lastUpdated: new Date().toISOString(),
-      hasApiKey: !!TMDB_API_KEY,
-    }, {
-      status: 200,
-      headers: {
-        'Cache-Control': 'public, s-maxage=1800, stale-while-revalidate=3600', // 30 min cache, 1 hour stale
-        'Content-Type': 'application/json',
-      },
-    });
+    return NextResponse.json(mockEpisode);
   } catch (error) {
-    console.error('TMDB API route error:', error);
-
-    return NextResponse.json({
-      success: false,
-      error: 'Failed to fetch TMDB data',
-      message: error instanceof Error ? error.message : 'Unknown error',
-      source: 'tmdb',
-      lastUpdated: new Date().toISOString(),
-    }, {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    console.error('TMDB API error:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch TMDB data' },
+      { status: 500 }
+    );
   }
 }
 

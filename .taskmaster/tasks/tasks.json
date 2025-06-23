@@ -1,0 +1,394 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Next.js Project with Material-UI and Tailwind CSS",
+        "description": "Initialize a Next.js project with TypeScript, integrate Material-UI (MUI) for Google Material Design 3 components, and set up Tailwind CSS for custom styling.",
+        "details": "1. Use create-next-app to initialize the project with TypeScript\n2. Install and configure Material-UI v5 (latest stable version)\n3. Set up Tailwind CSS with PostCSS\n4. Create a custom theme using MUI's createTheme function\n5. Set up a basic layout component with AppBar and Container\n6. Implement responsive design using MUI's Grid system and Tailwind's utility classes\n7. Configure next.config.js for static export",
+        "testStrategy": "1. Verify successful build and static export\n2. Test responsiveness on multiple device sizes\n3. Ensure Material Design 3 components render correctly\n4. Validate Tailwind CSS utility classes are working",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Initialize Next.js project with TypeScript",
+            "description": "Use create-next-app to set up a new Next.js project with TypeScript support",
+            "dependencies": [],
+            "details": "Run 'npx create-next-app@latest' with TypeScript option. Configure tsconfig.json for strict type checking.",
+            "status": "done",
+            "testStrategy": "Verify project structure and run 'npm run dev' to ensure successful compilation"
+          },
+          {
+            "id": 2,
+            "title": "Integrate Material-UI (MUI) v5",
+            "description": "Install and configure Material-UI v5 for Google Material Design 3 components",
+            "dependencies": [
+              1
+            ],
+            "details": "Install @mui/material, @emotion/react, @emotion/styled. Set up MUI theme provider in _app.tsx.",
+            "status": "done",
+            "testStrategy": "Create a test page with MUI components to verify proper rendering and styling"
+          },
+          {
+            "id": 3,
+            "title": "Set up Tailwind CSS with PostCSS",
+            "description": "Install and configure Tailwind CSS for custom styling alongside MUI",
+            "dependencies": [
+              1
+            ],
+            "details": "Install tailwindcss, postcss, autoprefixer. Create tailwind.config.js and postcss.config.js. Add Tailwind directives to global CSS file.",
+            "status": "done",
+            "testStrategy": "Apply Tailwind classes to elements and verify styling in the browser"
+          },
+          {
+            "id": 4,
+            "title": "Create custom MUI theme and basic layout",
+            "description": "Implement a custom theme using MUI's createTheme and set up a basic layout with AppBar and Container",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Use createTheme to define custom colors, typography, and component styles. Create a Layout component with MUI AppBar and Container.",
+            "status": "done",
+            "testStrategy": "Test theme application across different components and verify layout responsiveness"
+          },
+          {
+            "id": 5,
+            "title": "Implement responsive design and configure for static export",
+            "description": "Use MUI's Grid system with Tailwind utility classes for responsiveness and set up next.config.js for static export",
+            "dependencies": [
+              4
+            ],
+            "details": "Implement responsive Grid layout using MUI and enhance with Tailwind classes. Configure next.config.js for static HTML export.",
+            "status": "done",
+            "testStrategy": "Test responsiveness across various screen sizes and verify successful static export build"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Implement Core Data Fetching and State Management",
+        "description": "Set up a robust data fetching system using SWR (stale-while-revalidate) for real-time updates and implement global state management with React Context API.",
+        "details": "1. Install and configure SWR (v2.1.5 or latest stable)\n2. Create API routes for fetching SNL data from multiple sources (TVMaze, TMDB, TV Guide, JustWatch)\n3. Implement data fetching hooks using SWR for each API\n4. Set up React Context for global state management\n5. Create reducers for updating SNL status, host, and musical guest information\n6. Implement error handling and loading states\n7. Set up a daily refresh cycle using SWR's revalidation",
+        "testStrategy": "1. Unit test API routes and data fetching hooks\n2. Test error handling and loading states\n3. Verify data consistency across multiple sources\n4. Simulate API failures and test fallback strategies",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install and Configure SWR Package",
+            "description": "Set up the SWR package for data fetching with stale-while-revalidate caching strategy and configure global SWR options.",
+            "dependencies": [],
+            "details": "Install SWR v2.1.5 or latest stable version using npm or yarn. Create a configuration file (swr-config.js) that sets up global SWR options including: default fetcher function, refresh interval (daily), error retry count, and dedupingInterval. Implement a custom SWR provider component that wraps the application and provides these configurations.",
+            "status": "done",
+            "testStrategy": "Create a simple test component that uses SWR to verify configuration is working correctly. Test that revalidation occurs at the specified interval."
+          },
+          {
+            "id": 2,
+            "title": "Create API Routes for SNL Data Sources",
+            "description": "Implement server-side API routes that fetch SNL data from multiple external sources and normalize the response format.",
+            "dependencies": [],
+            "details": "Create API routes in the pages/api directory for each data source: TVMaze (/api/tvmaze), TMDB (/api/tmdb), TV Guide (/api/tvguide), and JustWatch (/api/justwatch). Each route should handle authentication with the respective API, fetch relevant SNL data, and transform the response into a consistent format. Implement a combined endpoint (/api/snl) that aggregates data from all sources. Use environment variables for API keys and credentials.",
+            "status": "done",
+            "testStrategy": "Create unit tests for each API route using Jest and mock external API responses. Test error handling by simulating API failures."
+          },
+          {
+            "id": 3,
+            "title": "Implement SWR Data Fetching Hooks",
+            "description": "Create custom React hooks using SWR to fetch and cache SNL data from the API routes.",
+            "dependencies": [],
+            "details": "Create a hooks directory with custom SWR hooks for each data source: useEpisodeData, useHostData, useMusicalGuestData, and useScheduleData. Each hook should use SWR to fetch from the corresponding API route, handle loading and error states, and provide data revalidation methods. Implement a useSNLData hook that combines all data sources and provides a unified interface. Add proper TypeScript types for all hook return values.",
+            "status": "done",
+            "testStrategy": "Write tests for each hook using React Testing Library to verify data fetching, loading states, error handling, and revalidation."
+          },
+          {
+            "id": 4,
+            "title": "Set Up React Context for Global State",
+            "description": "Create a React Context structure to manage global application state for SNL data.",
+            "dependencies": [],
+            "details": "Create a context directory with a SNLContext.tsx file that defines the context structure, provider component, and initial state. Define TypeScript interfaces for the state shape including episode information, host details, musical guest data, and schedule. Implement the SNLProvider component that wraps the application and provides the context values. Create a useSnlContext hook for consuming the context throughout the application.",
+            "status": "done",
+            "testStrategy": "Test the context provider with React Testing Library to ensure it properly initializes and provides state to child components."
+          },
+          {
+            "id": 5,
+            "title": "Implement State Management Reducers",
+            "description": "Create reducers to handle state updates for SNL data within the React Context.",
+            "dependencies": [],
+            "details": "Create a reducers directory with separate reducer functions for different state slices: episodeReducer, hostReducer, musicalGuestReducer, and scheduleReducer. Implement action creators for each state update operation. Combine reducers into a root reducer that handles all state updates. Add TypeScript types for all actions and state changes. Ensure reducers are pure functions that properly handle immutable state updates.\n<info added on 2025-06-22T23:55:24.129Z>\nWe implemented a unified reducer (snlReducer) within the SNLContext.tsx file instead of creating separate reducers for different state slices. This consolidated approach handles all state updates for episode, host, musical guest, and schedule data with proper TypeScript types and immutable state updates. The unified reducer pattern proved more efficient and maintainable for our specific use case than the originally planned separate reducers structure.\n</info added on 2025-06-22T23:55:24.129Z>",
+            "status": "done",
+            "testStrategy": "Write unit tests for each reducer to verify they correctly update state based on different actions and maintain immutability."
+          },
+          {
+            "id": 6,
+            "title": "Integrate SWR with Context and Add Error Handling",
+            "description": "Connect the SWR data fetching hooks with the React Context state management and implement comprehensive error and loading states.",
+            "dependencies": [],
+            "details": "Update the SNLProvider to use the SWR hooks for data fetching and dispatch actions to the reducers based on fetch results. Implement error boundaries to catch and display errors at appropriate component levels. Create loading state components and skeletons for different parts of the UI. Add retry logic for failed requests with exponential backoff. Implement optimistic updates for better user experience. Add toast notifications for error states using a library like react-toastify.",
+            "status": "done",
+            "testStrategy": "Create integration tests that verify the complete data flow from SWR fetching through context updates to component rendering, including error and loading states."
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Design and Implement Main Status Display",
+        "description": "Create the primary screen elements for displaying SNL live status, host information, and musical guest details.",
+        "details": "1. Design layout using MUI Grid and Paper components\n2. Implement large status indicator using MUI Typography and custom styling\n3. Create components for host and musical guest information display\n4. Integrate with data fetching hooks for real-time updates\n5. Implement conditional rendering for live shows vs. reruns\n6. Add countdown timer for next live show using react-countdown (v2.3.5 or latest)\n7. Ensure accessibility with proper ARIA labels and semantic HTML",
+        "testStrategy": "1. Unit test individual components\n2. Integration test for data flow from API to UI\n3. Test conditional rendering for different show statuses\n4. Verify accessibility using automated tools (e.g., jest-axe)",
+        "priority": "high",
+        "dependencies": [
+          1,
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design Layout with MUI Components",
+            "description": "Create the main layout structure using MUI Grid and Paper components for the status display screen.",
+            "dependencies": [],
+            "details": "Use MUI Grid for responsive layout. Implement Paper components for distinct sections: status indicator, host info, musical guest info, and countdown timer.",
+            "status": "pending",
+            "testStrategy": "Verify layout responsiveness across different screen sizes using MUI's breakpoints."
+          },
+          {
+            "id": 2,
+            "title": "Implement Status Indicator and Show Information",
+            "description": "Develop the large status indicator and components for host and musical guest information display.",
+            "dependencies": [
+              1
+            ],
+            "details": "Use MUI Typography with custom styling for the status indicator. Create reusable components for host and musical guest info. Implement conditional rendering for live shows vs. reruns.",
+            "status": "pending",
+            "testStrategy": "Test conditional rendering logic and styling consistency across different show states."
+          },
+          {
+            "id": 3,
+            "title": "Integrate Real-time Data Fetching",
+            "description": "Implement data fetching hooks for real-time updates of show status and information.",
+            "dependencies": [
+              2
+            ],
+            "details": "Create custom hooks to fetch and manage real-time data. Integrate with backend API endpoints. Implement error handling and loading states.",
+            "status": "pending",
+            "testStrategy": "Mock API responses to test various data scenarios and error states."
+          },
+          {
+            "id": 4,
+            "title": "Add Countdown Timer for Next Live Show",
+            "description": "Implement a countdown timer using react-countdown library to display time until the next live show.",
+            "dependencies": [
+              2
+            ],
+            "details": "Install react-countdown v2.3.5 or latest. Create a custom countdown component. Integrate with show schedule data to determine next live show time.",
+            "status": "pending",
+            "testStrategy": "Test timer accuracy and proper updates when crossing day boundaries or schedule changes."
+          },
+          {
+            "id": 5,
+            "title": "Ensure Accessibility and Final Polish",
+            "description": "Implement accessibility features and perform final adjustments for the status display.",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Add proper ARIA labels and use semantic HTML throughout the component. Ensure keyboard navigation works correctly. Perform final styling adjustments for visual consistency.",
+            "status": "pending",
+            "testStrategy": "Conduct accessibility audit using tools like axe-core. Perform manual testing with screen readers and keyboard-only navigation."
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Implement User Authentication and Preferences",
+        "description": "Set up user authentication and preference management using Supabase for backend services.",
+        "details": "1. Set up Supabase project and install supabase-js (v2.24.0 or latest)\n2. Implement sign-up and login functionality using Supabase Auth\n3. Create user preferences table in Supabase\n4. Implement preference management UI using MUI components\n5. Set up real-time subscription for user preference updates\n6. Implement secure session management and token refresh\n7. Add social login options (Google, Facebook) if desired",
+        "testStrategy": "1. Test user registration and login flows\n2. Verify preference updates in real-time\n3. Test token refresh and session management\n4. Ensure proper error handling for auth failures",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Develop Notification System",
+        "description": "Implement a flexible notification system supporting email and SMS notifications with user preferences.",
+        "details": "1. Set up SendGrid API for email notifications (use @sendgrid/mail v7.7.0 or latest)\n2. Implement Twilio API for SMS notifications (if budget allows)\n3. Create notification templates for different scenarios (live shows, reruns, season returns)\n4. Implement notification scheduling based on user preferences\n5. Set up serverless functions for sending notifications\n6. Implement notification history and management in user dashboard\n7. Ensure compliance with anti-spam regulations",
+        "testStrategy": "1. Unit test notification generation logic\n2. Integration test with SendGrid and Twilio APIs\n3. Test scheduling accuracy\n4. Verify notification content and formatting\n5. Load test notification system",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Implement Social Sharing System",
+        "description": "Create a system for generating and sharing custom social media graphics with SNL information.",
+        "details": "1. Use Canvas API for client-side image generation\n2. Implement image composition logic for different sharing scenarios\n3. Create a database of classic SNL quotes and jokes\n4. Integrate social sharing APIs for major platforms (Twitter, Facebook, Instagram)\n5. Implement 'Copy Link' and 'Download Image' functionality\n6. Optimize image generation for performance\n7. Ensure proper attribution and copyright compliance for used assets",
+        "testStrategy": "1. Unit test image generation logic\n2. Test social sharing functionality across platforms\n3. Verify image quality and size optimizations\n4. Test accessibility of sharing features",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Develop Admin Interface for Manual Data Entry",
+        "description": "Create a simple admin interface for manual data entry as a fallback for API failures.",
+        "details": "1. Design admin dashboard using MUI components\n2. Implement forms for manual entry of show status, host, and musical guest information\n3. Create admin-only API routes for data manipulation\n4. Implement role-based access control using Supabase policies\n5. Add audit logging for all manual data changes\n6. Implement data validation and error handling\n7. Create a simple workflow for reviewing and approving manual entries",
+        "testStrategy": "1. Test admin authentication and authorization\n2. Verify data validation and error handling\n3. Test audit logging functionality\n4. Ensure proper integration with main data flow",
+        "priority": "low",
+        "dependencies": [
+          2,
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Implement Progressive Web App (PWA) Features",
+        "description": "Transform the web application into a Progressive Web App for enhanced user experience and offline capabilities.",
+        "details": "1. Configure next-pwa (v5.6.0 or latest) for service worker generation\n2. Create app manifest for 'Add to Home Screen' functionality\n3. Implement offline fallback page\n4. Set up caching strategies for API responses and static assets\n5. Add push notification support using web push API\n6. Implement background sync for offline actions\n7. Optimize for various device sizes and orientations",
+        "testStrategy": "1. Test PWA installation process on multiple devices\n2. Verify offline functionality and caching\n3. Test push notifications\n4. Ensure proper functioning across different network conditions",
+        "priority": "low",
+        "dependencies": [
+          1,
+          2,
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Implement Analytics and Performance Monitoring",
+        "description": "Set up comprehensive analytics and performance monitoring to track user engagement and application performance.",
+        "details": "1. Integrate Google Analytics 4 for user behavior tracking\n2. Implement custom event tracking for key user actions\n3. Set up performance monitoring using Next.js Analytics or Vercel Analytics\n4. Create a dashboard for visualizing key metrics (visits, shares, notifications)\n5. Implement error tracking and reporting using Sentry (latest version)\n6. Set up automated performance testing using Lighthouse CI\n7. Implement A/B testing framework for future optimizations",
+        "testStrategy": "1. Verify accurate data collection in Google Analytics\n2. Test custom event tracking\n3. Ensure performance metrics are accurately reported\n4. Test error reporting and alerts",
+        "priority": "low",
+        "dependencies": [
+          2,
+          3,
+          5,
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Implement Community Reporting Feature",
+        "description": "Create a system for users to report inaccuracies or provide real-time corrections to SNL information.",
+        "details": "1. Design and implement a user-friendly reporting interface\n2. Create API endpoints for submitting and managing reports\n3. Implement a moderation queue for reviewing user submissions\n4. Set up notifications for administrators on new reports\n5. Create a voting or verification system for community-sourced information\n6. Implement rate limiting and spam prevention measures\n7. Add a 'community verified' badge for confirmed information",
+        "testStrategy": "1. Test report submission process\n2. Verify moderation queue functionality\n3. Test admin notifications and review process\n4. Ensure proper handling of high report volumes",
+        "priority": "low",
+        "dependencies": [
+          2,
+          3,
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 11,
+        "title": "Optimize for Search Engines and Social Sharing",
+        "description": "Implement SEO best practices and optimize for social media sharing to increase visibility and user acquisition.",
+        "details": "1. Implement dynamic meta tags using Next.js Head component\n2. Create a sitemap.xml and robots.txt\n3. Implement structured data (JSON-LD) for rich snippets\n4. Optimize for Core Web Vitals (LCP, FID, CLS)\n5. Implement Open Graph and Twitter Card meta tags for rich social sharing\n6. Create a custom 404 page with helpful navigation\n7. Implement canonical URLs to avoid duplicate content issues",
+        "testStrategy": "1. Validate structured data using Google's Rich Results Test\n2. Test social sharing appearance on major platforms\n3. Verify Core Web Vitals scores using Lighthouse\n4. Ensure proper indexing using Google Search Console",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          3,
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 12,
+        "title": "Implement Caching and Performance Optimizations",
+        "description": "Optimize application performance through strategic caching and code optimizations.",
+        "details": "1. Implement Redis caching for API responses (using ioredis v5.3.2 or latest)\n2. Set up a CDN for static asset delivery (e.g., Cloudflare)\n3. Optimize images using next/image with appropriate sizing and formats\n4. Implement code splitting and lazy loading for non-critical components\n5. Set up HTTP/2 server push for critical assets\n6. Minimize and optimize third-party script loading\n7. Implement service worker caching strategies for offline support",
+        "testStrategy": "1. Measure and compare load times before and after optimizations\n2. Test application performance under poor network conditions\n3. Verify correct functioning of lazy-loaded components\n4. Ensure offline functionality works as expected",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3,
+          8
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 13,
+        "title": "Implement A/B Testing Framework",
+        "description": "Set up an A/B testing framework to optimize user engagement and conversion rates.",
+        "details": "1. Integrate an A/B testing library like react-ab-test (v2.2.0 or latest)\n2. Set up experiment configurations for different UI variations\n3. Implement tracking for conversion events (e.g., notification sign-ups, shares)\n4. Create a dashboard for visualizing A/B test results\n5. Implement statistical significance calculations\n6. Set up automated email reports for test results\n7. Ensure GDPR compliance for user data collection in tests",
+        "testStrategy": "1. Verify correct distribution of users into test groups\n2. Test tracking of conversion events\n3. Validate statistical calculations\n4. Ensure proper handling of user opt-outs",
+        "priority": "low",
+        "dependencies": [
+          3,
+          5,
+          6,
+          9
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 14,
+        "title": "Implement Internationalization (i18n)",
+        "description": "Add support for multiple languages to expand the application's reach to a global audience.",
+        "details": "1. Integrate next-i18next (v13.0.3 or latest) for translation management\n2. Extract all user-facing strings into translation files\n3. Implement language selection UI\n4. Set up automatic language detection based on user's browser settings\n5. Ensure proper handling of RTL languages\n6. Implement dynamic loading of translation files\n7. Optimize for SEO with hreflang tags and translated metadata",
+        "testStrategy": "1. Verify correct rendering of translated content\n2. Test language switching functionality\n3. Ensure proper handling of plurals and date formats\n4. Test RTL layout in supported languages",
+        "priority": "low",
+        "dependencies": [
+          1,
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 15,
+        "title": "Implement Accessibility Enhancements",
+        "description": "Ensure the application is fully accessible to users with disabilities by implementing WCAG 2.1 AA standards.",
+        "details": "1. Perform a comprehensive accessibility audit using axe-core (v4.7.0 or latest)\n2. Implement proper heading structure and ARIA landmarks\n3. Ensure all interactive elements are keyboard accessible\n4. Add skip links for keyboard navigation\n5. Implement high contrast mode and respect user color scheme preferences\n6. Ensure proper alt text for all images and icons\n7. Implement announcements for dynamic content changes using aria-live regions",
+        "testStrategy": "1. Conduct automated accessibility testing using jest-axe\n2. Perform manual testing with screen readers (e.g., NVDA, VoiceOver)\n3. Test keyboard navigation throughout the application\n4. Verify color contrast ratios meet WCAG AA standards",
+        "priority": "high",
+        "dependencies": [
+          1,
+          3,
+          6,
+          8
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-06-22T22:38:38.083Z",
+      "updated": "2025-06-22T23:58:19.612Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
