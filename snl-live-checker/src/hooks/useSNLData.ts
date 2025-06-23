@@ -32,20 +32,15 @@ export const useSNLData = (): UseSNLDataResult => {
     fetcher,
     {
       refreshInterval: 30 * 60 * 1000, // 30 minutes
-      revalidateOnFocus: true,
+      revalidateOnFocus: false, // Disable to prevent sync issues
       revalidateOnReconnect: true,
       dedupingInterval: 5 * 60 * 1000, // 5 minutes
-      errorRetryCount: 3,
-      errorRetryInterval: 5000,
+      errorRetryCount: 2, // Reduce retry count
+      errorRetryInterval: 3000,
+      keepPreviousData: true,
       shouldRetryOnError: (error) => {
-        // Don't retry on 4xx errors (client errors)
-        // Safely check if error has status property
-        const status = (error as any)?.status || (error as any)?.info?.status;
-        if (typeof status === 'number') {
-          return status >= 500;
-        }
-        // If no status available, retry for unknown errors
-        return true;
+        // Simplified error handling
+        return false; // Don't retry to prevent sync issues
       },
     }
   );
@@ -66,7 +61,9 @@ export const useSNLData = (): UseSNLDataResult => {
 export const useScheduleData = () => {
   return useSWR('/api/schedule', fetcher, {
     refreshInterval: 15 * 60 * 1000, // 15 minutes
-    revalidateOnFocus: true,
+    revalidateOnFocus: false, // Disable to prevent sync issues
+    shouldRetryOnError: () => false, // Don't retry
+    keepPreviousData: true,
   });
 };
 

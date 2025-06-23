@@ -35,20 +35,20 @@ export const swrConfig: SWRConfiguration = {
   // Exponential backoff for retries
   errorRetryInterval: 2000, // Start with 2 seconds
   
-  // Revalidate when the window regains focus
-  revalidateOnFocus: true,
+  // Disable focus revalidation to prevent sync issues
+  revalidateOnFocus: false,
   
   // Revalidate when network connection is restored
   revalidateOnReconnect: true,
   
   // Don't revalidate if data is less than 10 minutes old
-  revalidateIfStale: true,
+  revalidateIfStale: false,
   
   // Keep previous data while fetching new data (important for UX)
   keepPreviousData: true,
   
   // Load fresh data when component mounts
-  revalidateOnMount: true,
+  revalidateOnMount: false,
   
   // SNL-specific configuration
   // Fallback data for offline scenarios
@@ -60,34 +60,19 @@ export const swrConfig: SWRConfiguration = {
     lastUpdated: null,
   },
   
-  // Custom error handling
+  // Custom error handling (simplified to prevent sync issues)
   onError: (error, key) => {
-    console.error('SWR Error:', error, 'Key:', key);
-    
-    // You could integrate with error tracking service here
-    // e.g., Sentry.captureException(error);
-  },
-  
-  // Success callback for debugging
-  onSuccess: (data, key) => {
-    console.log('SWR Success:', key, 'Data:', data);
+    // Only log errors in development to prevent console spam
+    if (process.env.NODE_ENV === 'development') {
+      console.error('SWR Error:', error.message, 'Key:', key);
+    }
   },
   
   // Loading timeout (30 seconds)
   loadingTimeout: 30000,
   
-  // Custom comparison function for data
-  compare: (a, b) => {
-    // Custom comparison logic for SNL data
-    if (!a || !b) return false;
-    
-    return (
-      a.isLive === b.isLive &&
-      a.showDate === b.showDate &&
-      a.host?.name === b.host?.name &&
-      a.musicalGuest?.name === b.musicalGuest?.name
-    );
-  },
+  // Use default comparison to prevent sync issues
+  // compare: undefined, // Let SWR use default comparison
 };
 
 // Helper function to create cache keys
