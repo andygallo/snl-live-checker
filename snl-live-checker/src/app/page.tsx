@@ -210,10 +210,11 @@ export default function Home() {
                 fontSize: { xs: '1.5rem', md: '2rem' },
                 fontFamily: '"Orbitron", "Roboto Mono", monospace',
                 textAlign: 'center',
-                mb: 2
+                mb: 2,
+                lineHeight: 1.2
               }}
             >
-              Is Saturday Night Live this week?
+              Is Saturday Night<br />Live this week?
             </Typography>
             
             {/* Big YES/NO Answer */}
@@ -243,21 +244,6 @@ export default function Home() {
                  aria-live="assertive"
                >
                  {isLive ? "YES!" : isNewEpisode ? "YES!" : "NOPE!"}
-               </Typography>
-               <Typography
-                 variant="h6"
-                 sx={{
-                   color: 'rgba(255, 255, 255, 0.8)',
-                   fontSize: { xs: '0.875rem', md: '1rem' },
-                   fontFamily: '"Orbitron", "Roboto Mono", monospace',
-                   textAlign: 'center',
-                 }}
-               >
-                 {isLive 
-                   ? "SNL is LIVE right now!" 
-                   : isNewEpisode 
-                     ? "New episode this Saturday!" 
-                     : "It's a rerun week - time for church!"}
                </Typography>
             </motion.div>
           </motion.div>

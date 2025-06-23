@@ -163,119 +163,78 @@ export const EnhancedStatusDisplay: React.FC<EnhancedStatusDisplayProps> = ({
 
   return (
     <div className={className}>
-      {/* Live Status */}
-      {isLive ? (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
+      {/* Episode Date and Time Info with Countdown */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <Paper
+          elevation={2}
+          sx={{
+            background: isLive 
+              ? 'linear-gradient(45deg, rgba(255, 0, 0, 0.1), rgba(255, 100, 100, 0.1))'
+              : 'linear-gradient(45deg, rgba(33, 150, 243, 0.1), rgba(103, 58, 183, 0.1))',
+            border: isLive 
+              ? '2px solid #ff0000'
+              : '1px solid rgba(33, 150, 243, 0.3)',
+            borderRadius: '16px',
+            padding: '16px',
+            backdropFilter: 'blur(8px)',
+            boxShadow: isLive ? '0 0 30px rgba(255, 0, 0, 0.3)' : 'none',
+          }}
         >
-          <Paper
-            elevation={3}
-            sx={{
-              background: 'linear-gradient(45deg, rgba(255, 0, 0, 0.1), rgba(255, 100, 100, 0.1))',
-              border: '2px solid #ff0000',
-              borderRadius: '16px',
-              padding: '24px',
-              backdropFilter: 'blur(12px)',
-              boxShadow: '0 0 30px rgba(255, 0, 0, 0.3)',
-            }}
-          >
-            <Box display="flex" alignItems="center" justifyContent="center" gap={2} mb={2}>
-              <LiveTv sx={{ color: '#ff0000', fontSize: 40 }} />
-              <Typography
-                variant="h3"
-                className="neon-text-red"
-                sx={{
-                  fontWeight: 'bold',
-                  fontSize: { xs: '2rem', md: '3rem' },
-                  fontFamily: '"Orbitron", "Roboto Mono", monospace',
-                }}
-                component="h2"
-              >
-                LIVE NOW!
-              </Typography>
-            </Box>
+          {/* Date and Time Information */}
+          <Box textAlign="center" mb={2}>
             <Typography
-              variant="h6"
+              variant="h5"
+              className={isLive ? "neon-text-red" : "neon-text-cyan"}
               sx={{
-                color: 'rgba(255, 255, 255, 0.9)',
-                textAlign: 'center',
+                fontWeight: 'bold',
                 fontSize: { xs: '1rem', md: '1.25rem' },
+                fontFamily: '"Orbitron", "Roboto Mono", monospace',
+                mb: 1
+              }}
+              component="h2"
+            >
+              {isLive ? "ON AIR NOW" : formatDate(dayInfo.upcomingSaturday)}
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                color: 'rgba(255, 255, 255, 0.8)',
+                fontSize: { xs: '0.75rem', md: '0.875rem' },
+                fontFamily: '"Orbitron", "Roboto Mono", monospace',
               }}
             >
-              Saturday Night Live is on the air!
+              {isLive ? "Saturday Night Live is broadcasting" : `${formatTime(dayInfo.upcomingSaturday)} • 90 minutes`}
             </Typography>
-          </Paper>
-        </motion.div>
-      ) : (
-        /* Upcoming Show Status */
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <Paper
-            elevation={2}
-            sx={{
-              background: 'linear-gradient(45deg, rgba(33, 150, 243, 0.1), rgba(103, 58, 183, 0.1))',
-              border: '1px solid rgba(33, 150, 243, 0.3)',
-              borderRadius: '16px',
-              padding: '16px',
-              backdropFilter: 'blur(8px)',
-            }}
-          >
-            {/* Primary Message */}
-            <Box textAlign="center" mb={2}>
-              <Typography
-                variant="h4"
-                className="neon-text-cyan"
-                sx={{
-                  fontWeight: 'bold',
-                  fontSize: { xs: '1.25rem', md: '1.75rem' },
-                  fontFamily: '"Orbitron", "Roboto Mono", monospace',
-                  mb: 1
-                }}
-                component="h2"
-              >
-                {dayInfo.messaging.primary}
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  fontSize: { xs: '0.75rem', md: '0.875rem' },
-                }}
-              >
-                {dayInfo.messaging.secondary}
-              </Typography>
-            </Box>
+          </Box>
 
-            {/* Countdown Timer */}
-            <Box textAlign="center" mb={2}>
-              <Typography
-                variant="h6"
-                className="neon-text-blue"
-                sx={{
-                  fontWeight: 'bold',
-                  fontSize: { xs: '0.875rem', md: '1rem' },
-                  mb: 1,
-                  fontFamily: '"Orbitron", "Roboto Mono", monospace',
-                }}
-              >
-                {dayInfo.messaging.countdownLabel}:
-              </Typography>
-              <Countdown
-                key={dayInfo.upcomingSaturday.toDateString()}
-                date={dayInfo.upcomingSaturday}
-                renderer={(props) => <EnhancedCountdownRenderer {...props} dayInfo={dayInfo} />}
-                intervalDelay={1000}
-                precision={3}
-              />
-            </Box>
-          </Paper>
-        </motion.div>
-      )}
+          {/* Countdown Timer - Always Show */}
+          <Box textAlign="center">
+            <Typography
+              variant="h6"
+              className="neon-text-blue"
+              sx={{
+                fontWeight: 'bold',
+                fontSize: { xs: '0.875rem', md: '1rem' },
+                mb: 1,
+                fontFamily: '"Orbitron", "Roboto Mono", monospace',
+              }}
+            >
+              {isLive ? "Time Remaining:" : "Countdown:"}
+            </Typography>
+            <Countdown
+              key={dayInfo.upcomingSaturday.toDateString()}
+              date={isLive ? new Date(dayInfo.upcomingSaturday.getTime() + 90 * 60 * 1000) : dayInfo.upcomingSaturday}
+              renderer={(props) => <EnhancedCountdownRenderer {...props} dayInfo={dayInfo} />}
+              intervalDelay={1000}
+              precision={3}
+            />
+          </Box>
+        </Paper>
+      </motion.div>
     </div>
   );
 };

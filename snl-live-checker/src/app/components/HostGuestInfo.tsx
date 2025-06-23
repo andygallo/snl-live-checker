@@ -86,7 +86,7 @@ export default function HostGuestInfo({
 
       {/* Host and Musical Guest in horizontal layout */}
       <motion.div
-        className="flex flex-col md:flex-row gap-4 justify-center items-center"
+        className="flex flex-col md:flex-row gap-8 justify-center items-center"
         initial={{ y: 30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 2, duration: 0.8 }}
