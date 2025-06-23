@@ -47,12 +47,16 @@ const EnhancedCountdownRenderer = ({ days, hours, minutes, seconds, completed }:
             textAlign: 'center',
             fontFamily: '"Orbitron", "Roboto Mono", monospace',
           }}
+          role="alert"
+          aria-live="assertive"
         >
           🔴 LIVE NOW!
         </Typography>
       </motion.div>
     );
   }
+
+  const timeString = `${days > 0 ? `${days} days, ` : ''}${hours} hours, ${minutes} minutes, ${seconds} seconds until next SNL show`;
 
   const timeUnits = [
     { value: days, label: 'DAYS', show: days > 0 },
@@ -67,6 +71,9 @@ const EnhancedCountdownRenderer = ({ days, hours, minutes, seconds, completed }:
       justifyContent="center" 
       gap={{ xs: 1, sm: 2, md: 4 }}
       flexWrap="wrap"
+      role="timer"
+      aria-label={timeString}
+      aria-live="polite"
     >
       {timeUnits.map((unit, index) => (
         <motion.div
@@ -169,6 +176,8 @@ export const EnhancedCountdown: React.FC<EnhancedCountdownProps> = ({
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.8 }}
+      role="region"
+      aria-label="Countdown to next SNL show"
     >
       <Paper
         elevation={8}

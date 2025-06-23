@@ -16,7 +16,10 @@ export default function HostGuestInfo({
   musicalGuest = "Boygenius" 
 }: HostGuestInfoProps) {
   return (
-    <>
+    <section 
+      aria-label="Tonight's SNL cast information"
+      role="region"
+    >
       {/* Host Info */}
       <motion.div
         className="text-center mb-6"
@@ -118,6 +121,6 @@ export default function HostGuestInfo({
           </Typography>
         </Paper>
       </motion.div>
-    </>
+    </section>
   );
 } 

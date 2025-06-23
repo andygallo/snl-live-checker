@@ -29,14 +29,25 @@ const CountdownRenderer = ({ hours, minutes, seconds, completed }: CountdownRend
           fontSize: { xs: '1.5rem', md: '2rem' },
           textAlign: 'center',
         }}
+        role="alert"
+        aria-live="assertive"
       >
         🔴 LIVE NOW!
       </Typography>
     );
   }
 
+  const timeString = `${hours} hours, ${minutes} minutes, ${seconds} seconds until next SNL show`;
+
   return (
-    <Box display="flex" justifyContent="center" gap={{ xs: 2, md: 4 }}>
+    <Box 
+      display="flex" 
+      justifyContent="center" 
+      gap={{ xs: 2, md: 4 }}
+      role="timer"
+      aria-label={timeString}
+      aria-live="polite"
+    >
       <Box textAlign="center">
         <Typography
           variant="h3"
