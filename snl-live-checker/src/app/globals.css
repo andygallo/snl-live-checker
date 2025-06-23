@@ -149,3 +149,273 @@ body {
     padding: 2rem;
   }
 }
+
+/* Retro-futuristic styling */
+.retro-container {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Orbitron', 'Arial Black', sans-serif;
+}
+
+.retro-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    #0a0a2e 0%, 
+    #16213e 25%, 
+    #0f3460 50%, 
+    #533483 75%, 
+    #e94560 100%);
+  z-index: 0;
+}
+
+.retro-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+}
+
+.city-skyline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: 
+    linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200"><polygon points="0,200 0,150 50,150 50,100 100,100 100,120 150,120 150,80 200,80 200,160 250,160 250,90 300,90 300,140 350,140 350,110 400,110 400,170 450,170 450,130 500,130 500,180 550,180 550,140 600,140 600,100 650,100 650,150 700,150 700,120 750,120 750,160 800,160 800,110 850,110 850,140 900,140 900,90 950,90 950,170 1000,170 1000,130 1050,130 1050,180 1100,180 1100,140 1150,140 1150,200 1200,200 1200,200 0,200" fill="%23000011" opacity="0.8"/></svg>') 
+    bottom center / cover no-repeat;
+  z-index: 1;
+}
+
+.palm-left, .palm-right {
+  position: absolute;
+  bottom: 0;
+  width: 120px;
+  height: 250px;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200"><g fill="%23001122" opacity="0.7"><path d="M45 200 L45 120 Q45 100 50 100 Q55 100 55 120 L55 200 Z"/><path d="M50 120 Q30 110 20 80 Q25 75 35 85 Q45 95 50 120"/><path d="M50 120 Q70 110 80 80 Q75 75 65 85 Q55 95 50 120"/><path d="M50 120 Q40 100 30 70 Q35 65 45 75 Q50 90 50 120"/><path d="M50 120 Q60 100 70 70 Q65 65 55 75 Q50 90 50 120"/><path d="M50 120 Q35 95 25 60 Q30 55 40 65 Q50 85 50 120"/><path d="M50 120 Q65 95 75 60 Q70 55 60 65 Q50 85 50 120"/></g></svg>') 
+    no-repeat bottom center;
+  background-size: contain;
+  z-index: 2;
+}
+
+.palm-left {
+  left: 40px;
+  transform: scaleX(-1);
+}
+
+.palm-right {
+  right: 40px;
+}
+
+.art-deco-frame {
+  background: rgba(0, 0, 0, 0.3);
+  border: 3px solid #ffd700;
+  border-radius: 30px;
+  padding: 60px 40px;
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 0 30px rgba(255, 215, 0, 0.3),
+    inset 0 0 30px rgba(255, 215, 0, 0.1);
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.art-deco-frame::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  border: 1px solid rgba(0, 255, 255, 0.5);
+  border-radius: 25px;
+  pointer-events: none;
+}
+
+.art-deco-frame::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border: 1px solid rgba(255, 107, 157, 0.3);
+  border-radius: 35px;
+  pointer-events: none;
+}
+
+.retro-card {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 15px;
+  padding: 20px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+}
+
+.countdown-wrapper {
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid #ffd700;
+  border-radius: 20px;
+  padding: 30px;
+  margin: 20px 0;
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 0 20px rgba(255, 215, 0, 0.3),
+    inset 0 0 20px rgba(255, 215, 0, 0.1);
+}
+
+/* Neon text effects */
+.neon-text-pink {
+  color: #ff6b9d;
+  text-shadow: 
+    0 0 5px #ff6b9d,
+    0 0 10px #ff6b9d,
+    0 0 15px #ff6b9d,
+    0 0 20px #ff1493,
+    0 0 35px #ff1493;
+  font-family: 'Orbitron', 'Arial Black', sans-serif;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+.neon-text-yellow {
+  color: #ffd700;
+  text-shadow: 
+    0 0 5px #ffd700,
+    0 0 10px #ffd700,
+    0 0 15px #ffd700,
+    0 0 20px #ffaa00,
+    0 0 35px #ffaa00;
+  font-family: 'Orbitron', 'Arial Black', sans-serif;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.neon-text-cyan {
+  color: #00ffff;
+  text-shadow: 
+    0 0 5px #00ffff,
+    0 0 10px #00ffff,
+    0 0 15px #00ffff,
+    0 0 20px #0088ff,
+    0 0 35px #0088ff;
+  font-family: 'Orbitron', 'Arial Black', sans-serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.neon-text-green {
+  color: #00ff88;
+  text-shadow: 
+    0 0 5px #00ff88,
+    0 0 10px #00ff88,
+    0 0 15px #00ff88,
+    0 0 20px #00cc66,
+    0 0 35px #00cc66;
+  font-family: 'Orbitron', 'Arial Black', sans-serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.neon-text-orange {
+  color: #ff8800;
+  text-shadow: 
+    0 0 5px #ff8800,
+    0 0 10px #ff8800,
+    0 0 15px #ff8800,
+    0 0 20px #ff6600,
+    0 0 35px #ff6600;
+  font-family: 'Orbitron', 'Arial Black', sans-serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.neon-text-blue {
+  color: #4488ff;
+  text-shadow: 
+    0 0 5px #4488ff,
+    0 0 10px #4488ff,
+    0 0 15px #4488ff,
+    0 0 20px #2266dd,
+    0 0 35px #2266dd;
+  font-family: 'Orbitron', 'Arial Black', sans-serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* Animations */
+@keyframes neon-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+  }
+}
+
+.art-deco-frame {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.countdown-wrapper {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .art-deco-frame {
+    padding: 40px 20px;
+    margin: 20px;
+  }
+  
+  .countdown-wrapper {
+    padding: 20px;
+  }
+  
+  .palm-left, .palm-right {
+    width: 80px;
+    height: 180px;
+  }
+  
+  .palm-left {
+    left: 10px;
+  }
+  
+  .palm-right {
+    right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .art-deco-frame {
+    padding: 30px 15px;
+    margin: 10px;
+  }
+  
+  .countdown-wrapper {
+    padding: 15px;
+  }
+  
+  .retro-card {
+    padding: 15px;
+  }
+}

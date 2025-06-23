@@ -1,383 +1,285 @@
 'use client';
 
-import { 
-  Container, 
-  Typography, 
-  Paper, 
-  Button, 
-  Chip, 
-  Box,
-  AppBar,
-  Toolbar,
-  Card,
-  CardContent,
-  Switch,
-  FormControlLabel
-} from '@mui/material';
-import { 
-  LiveTv as LiveTvIcon, 
-  Repeat as RepeatIcon,
-  Share as ShareIcon,
-  TheaterComedy as ComedyIcon,
-  ToggleOn as ToggleIcon
-} from '@mui/icons-material';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import Countdown from 'react-countdown';
+import { Box, Typography, Switch, FormControlLabel } from '@mui/material';
 
-// SNL Jokes for reruns
-const snlJokes = [
-  {
-    text: "It's a rerun, which means it's probably funnier than the original!",
-    character: "Weekend Update",
-  },
-  {
-    text: "Looks like you're watching a rerun... Well, isn't that special?",
-    character: "Church Lady",
-    sketch: "Church Chat",
-  },
-  {
-    text: "A rerun? That's... NOT!",
-    character: "Wayne Campbell",
-    sketch: "Wayne's World",
-  },
-  {
-    text: "It's a rerun, but hey, at least you're not watching reality TV!",
-    character: "Stefon",
-    sketch: "Weekend Update",
-  },
-  {
-    text: "Rerun alert! Time to practice your 'Live from New York' impression.",
-    character: "Cast Member",
-  },
-  {
-    text: "It's a rerun, which means you can quote along like the SNL superfan you are!",
-    character: "Superfans",
-    sketch: "Da Bears",
-  },
-  {
-    text: "A rerun? Well, excuuuuse me!",
-    character: "Steve Martin",
+// Retro countdown renderer
+const CountdownRenderer = ({ hours, minutes, seconds, completed }: any) => {
+  if (completed) {
+    return (
+      <motion.div
+        className="neon-text-yellow text-6xl md:text-8xl font-bold"
+        animate={{ scale: [1, 1.05, 1] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        LIVE NOW!
+      </motion.div>
+    );
+  } else {
+    return (
+      <div className="neon-text-yellow text-5xl md:text-7xl font-bold font-mono">
+        {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+      </div>
+    );
   }
-];
-
-// Host themes
-const hostThemes: Record<string, any> = {
-  'Timothée Chalamet': {
-    name: 'Timothée Chalamet',
-    colors: {
-      primary: '#9b59b6',
-      secondary: '#3498db',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-    },
-    catchphrase: "Indie vibes meet comedy gold!",
-    movieOrShow: "Dune",
-    funFact: "Youngest host to nail every sketch",
-    emoji: '🌟'
-  },
-  'Ryan Gosling': {
-    name: 'Ryan Gosling',
-    colors: {
-      primary: '#ff6b6b',
-      secondary: '#4ecdc4',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-    },
-    catchphrase: "Hey girl, SNL is live tonight!",
-    movieOrShow: "La La Land",
-    funFact: "Known for breaking character and making everyone laugh",
-    emoji: '🎭'
-  }
-};
-
-const defaultTheme = {
-  name: 'SNL Live',
-  colors: {
-    primary: '#ff0000',
-    secondary: '#0066cc',
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-  },
-  catchphrase: "Live from New York, it's Saturday Night!",
-  funFact: "Tonight's show is LIVE - anything can happen!",
-  emoji: '🎬'
 };
 
 export default function Home() {
-  // State for testing - now controlled by toggle
-  const [isLive, setIsLive] = useState(false);
-  const showDate = "December 22, 2024";
-  const host = "Timothée Chalamet";
-  const musicalGuest = "Gracie Abrams";
-  
-  const [currentJoke, setCurrentJoke] = useState(snlJokes[0]);
-  const hostTheme = hostThemes[host] || defaultTheme;
+  const [isTestMode, setIsTestMode] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [mounted, setMounted] = useState(false);
 
-  // Get new joke every 5 seconds for reruns
-  useEffect(() => {
-    if (!isLive) {
-      const interval = setInterval(() => {
-        const randomIndex = Math.floor(Math.random() * snlJokes.length);
-        setCurrentJoke(snlJokes[randomIndex]);
-      }, 5000);
-      return () => clearInterval(interval);
+  // Get next Saturday 11:30 PM ET
+  const getNextSNLDate = () => {
+    const now = new Date();
+    const nextSaturday = new Date(now);
+    
+    // Calculate days until next Saturday (6 = Saturday)
+    const daysUntilSaturday = (6 - now.getDay() + 7) % 7;
+    nextSaturday.setDate(now.getDate() + daysUntilSaturday);
+    nextSaturday.setHours(23, 30, 0, 0); // 11:30 PM ET
+    
+    // If it's Saturday but past 11:30 PM, get next Saturday
+    if (now.getDay() === 6 && now.getHours() >= 23 && now.getMinutes() >= 30) {
+      nextSaturday.setDate(nextSaturday.getDate() + 7);
     }
-  }, [isLive]);
-
-  const getStatusColors = () => {
-    if (isLive) {
-      return {
-        background: `linear-gradient(135deg, ${hostTheme.colors.primary} 0%, ${hostTheme.colors.secondary} 100%)`,
-        cardBackground: hostTheme.colors.background
-      };
+    
+    // If calculated date is in the past, add 7 days
+    if (nextSaturday <= now) {
+      nextSaturday.setDate(nextSaturday.getDate() + 7);
     }
-    return {
-      background: 'linear-gradient(135deg, #ff5722 0%, #ff8a65 100%)',
-      cardBackground: '#fff3e0'
-    };
+    
+    return nextSaturday;
   };
 
-  const colors = getStatusColors();
+  const nextSNLDate = getNextSNLDate();
+  
+  // Check if SNL is currently live (Saturday 11:30 PM - 1:00 AM ET)
+  const isCurrentlyLive = () => {
+    const now = new Date();
+    const day = now.getDay();
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    
+    // Saturday 11:30 PM - 11:59 PM
+    if (day === 6 && hour === 23 && minute >= 30) return true;
+    
+    // Sunday 12:00 AM - 1:00 AM (technically still Saturday's show)
+    if (day === 0 && hour === 0) return true;
+    
+    return false;
+  };
+
+  const isLive = isTestMode || isCurrentlyLive();
+
+  useEffect(() => {
+    setMounted(true);
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Prevent hydration mismatch by not rendering countdown until mounted
+  if (!mounted) {
+    return (
+      <div className="retro-container">
+        <div className="retro-bg"></div>
+        <div className="city-skyline"></div>
+        <div className="palm-left"></div>
+        <div className="palm-right"></div>
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
+          <div className="art-deco-frame">
+            <div className="text-center">
+              <div className="neon-text-pink text-4xl md:text-6xl font-bold mb-8">
+                Loading...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <>
-      {/* App Bar */}
-      <AppBar position="static" elevation={0}>
-        <Toolbar>
-          <ComedyIcon sx={{ mr: 2 }} />
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            SNL Live Checker
-          </Typography>
-          
-          {/* Testing Toggle */}
-          <FormControlLabel
-            control={
-              <Switch
-                checked={isLive}
-                onChange={(e) => setIsLive(e.target.checked)}
-                color="secondary"
-              />
-            }
-            label={
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <ToggleIcon />
-                <Typography variant="body2">
-                  {isLive ? 'LIVE' : 'RERUN'}
-                </Typography>
-              </Box>
-            }
-            sx={{ color: 'white' }}
-          />
-        </Toolbar>
-      </AppBar>
+    <div className="retro-container">
+      {/* Background */}
+      <div className="retro-bg"></div>
+      
+      {/* City skyline silhouette */}
+      <div className="city-skyline"></div>
+      
+      {/* Palm trees */}
+      <div className="palm-left"></div>
+      <div className="palm-right"></div>
+
+      {/* Test Mode Toggle */}
+      <Box className="absolute top-4 right-4 z-50">
+        <FormControlLabel
+          control={
+            <Switch
+              checked={isTestMode}
+              onChange={(e) => setIsTestMode(e.target.checked)}
+              sx={{
+                '& .MuiSwitch-thumb': {
+                  backgroundColor: '#ff0080',
+                },
+                '& .MuiSwitch-track': {
+                  backgroundColor: '#333',
+                },
+              }}
+            />
+          }
+          label={
+            <span className="text-white font-bold">
+              TEST: {isTestMode ? 'LIVE' : 'RERUN'}
+            </span>
+          }
+        />
+      </Box>
 
       {/* Main Content */}
-      <Container maxWidth="md" sx={{ py: 4 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-          {/* Main Status Display */}
-          <Paper 
-            elevation={3} 
-            sx={{ 
-              p: 4, 
-              textAlign: 'center',
-              background: colors.background,
-              color: 'white',
-              position: 'relative',
-              overflow: 'hidden'
-            }}
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
+        
+        {/* Art Deco Frame */}
+        <motion.div 
+          className="art-deco-frame"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1 }}
+        >
+          
+          {/* SNL Logo */}
+          <motion.div
+            className="text-center mb-8"
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <Box sx={{ mb: 2 }}>
-              {isLive ? (
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-                  <LiveTvIcon sx={{ fontSize: 60 }} />
-                  <Typography sx={{ fontSize: '3rem' }}>{hostTheme.emoji}</Typography>
-                </Box>
-              ) : (
-                <RepeatIcon sx={{ fontSize: 60 }} />
-              )}
-            </Box>
-            
-            <Typography variant="h2" component="h1" gutterBottom>
-              {isLive ? `SNL IS LIVE TONIGHT! ${hostTheme.emoji}` : "It's a Rerun, Folks"}
-            </Typography>
-            
-            <Typography variant="h6" sx={{ opacity: 0.9 }}>
-              {showDate} • 11:30 PM ET
-            </Typography>
+            <h1 className="neon-text-pink text-4xl md:text-6xl font-bold mb-2">
+              SATURDAY NIGHT
+            </h1>
+            <h1 className="neon-text-pink text-4xl md:text-6xl font-bold">
+              LIVE
+            </h1>
+          </motion.div>
 
-            {isLive && hostTheme.catchphrase && (
-              <Typography variant="h5" sx={{ mt: 2, fontStyle: 'italic', opacity: 0.9 }}>
-                "{hostTheme.catchphrase}"
-              </Typography>
+          {/* Status */}
+          <motion.div
+            className="text-center mb-8"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 1, duration: 0.5 }}
+          >
+            {isLive ? (
+              <div className="neon-text-green text-3xl md:text-4xl font-bold">
+                🔴 LIVE TONIGHT
+              </div>
+            ) : (
+              <div className="neon-text-orange text-3xl md:text-4xl font-bold">
+                📺 RERUN TONIGHT
+              </div>
             )}
-          </Paper>
+          </motion.div>
 
-          {/* SNL Joke for Reruns */}
-          {!isLive && (
-            <Card 
-              elevation={2}
-              sx={{ 
-                background: 'linear-gradient(135deg, #1e88e5 0%, #42a5f5 100%)',
-                color: 'white',
-                textAlign: 'center'
-              }}
-            >
-              <CardContent sx={{ p: 3 }}>
-                <Typography variant="h5" gutterBottom>
-                  🎭 SNL Says...
-                </Typography>
-                <Typography variant="h6" sx={{ fontStyle: 'italic', mb: 2 }}>
-                  "{currentJoke.text}"
-                </Typography>
-                {currentJoke.character && (
-                  <Chip 
-                    label={`- ${currentJoke.character}`}
-                    sx={{ 
-                      backgroundColor: 'rgba(255,255,255,0.2)', 
-                      color: 'white',
-                      fontWeight: 'bold'
-                    }}
+          {/* Countdown */}
+          <motion.div
+            className="text-center mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 0.8 }}
+          >
+            {!isLive && (
+              <>
+                <div className="neon-text-blue text-xl md:text-2xl mb-4">
+                  NEXT LIVE SHOW IN:
+                </div>
+                <div className="countdown-wrapper">
+                  <Countdown
+                    key={nextSNLDate.getTime()} // Force re-render when date changes
+                    date={nextSNLDate}
+                    renderer={CountdownRenderer}
+                    intervalDelay={1000}
+                    precision={3}
                   />
-                )}
-              </CardContent>
-            </Card>
-          )}
+                </div>
+                <div className="text-white text-sm mt-2">
+                  Next show: {nextSNLDate.toLocaleDateString()} at 11:30 PM ET
+                </div>
+              </>
+            )}
+            
+            {isLive && (
+              <motion.div
+                className="neon-text-yellow text-3xl md:text-5xl font-bold"
+                animate={{ 
+                  textShadow: [
+                    '0 0 10px #ffff00, 0 0 20px #ffff00, 0 0 30px #ffff00',
+                    '0 0 20px #ffff00, 0 0 30px #ffff00, 0 0 40px #ffff00',
+                    '0 0 10px #ffff00, 0 0 20px #ffff00, 0 0 30px #ffff00'
+                  ]
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                ON AIR NOW!
+              </motion.div>
+            )}
+          </motion.div>
 
-          {/* Host and Musical Guest Row */}
-          <Box 
-            className="snl-desktop-padding md:snl-mobile-padding"
-            sx={{ 
-              display: 'grid', 
-              gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, 
-              gap: { xs: 2, md: 4 } 
-            }}
+          {/* Host Info */}
+          <motion.div
+            className="text-center mb-6"
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 2, duration: 0.8 }}
           >
-            {/* Host Information */}
-            <Paper 
-              elevation={2} 
-              className="snl-card-hover elevation-2" 
-              sx={{ 
-                p: { xs: 2, md: 3 },
-                background: isLive ? colors.cardBackground : 'white'
-              }}
-            >
-              <Typography variant="h5" gutterBottom color="primary" className="tone-friendly">
-                Tonight's Host {isLive ? hostTheme.emoji : '🎭'}
-              </Typography>
-              <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: '1.5rem', md: '2rem' } }}>
-                {host}
-              </Typography>
-              <Chip 
-                label={isLive ? "LIVE TONIGHT!" : "Rerun"} 
-                color={isLive ? "success" : "warning"} 
-                size="small"
-                sx={{ mb: 2 }}
-              />
-              {isLive && hostTheme.movieOrShow && (
-                <Chip 
-                  label={`From: ${hostTheme.movieOrShow}`} 
-                  color="secondary" 
-                  size="small"
-                  sx={{ mb: 2, ml: 1 }}
-                />
-              )}
-              <Typography variant="body1" color="text.secondary" className="text-friendly">
-                {isLive 
-                  ? (hostTheme.funFact || "Get ready for an amazing live show!") 
-                  : "This is a rerun - perfect excuse to go out and live your life!"
-                }
-              </Typography>
-            </Paper>
+            <div className="retro-card">
+              <div className="neon-text-cyan text-xl md:text-2xl mb-2">
+                TONIGHT'S HOST
+              </div>
+              <div className="text-white text-lg md:text-xl">
+                {isLive ? "Timothée Chalamet" : "Classic Episode"}
+              </div>
+            </div>
+          </motion.div>
 
-            {/* Musical Guest */}
-            <Paper 
-              elevation={2} 
-              className="snl-card-hover elevation-2" 
-              sx={{ 
-                p: { xs: 2, md: 3 },
-                background: isLive ? colors.cardBackground : 'white'
-              }}
-            >
-              <Typography variant="h5" gutterBottom color="primary" className="tone-friendly">
-                Musical Guest {isLive ? '🎵' : '📻'}
-              </Typography>
-              <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: '1.5rem', md: '2rem' } }}>
-                {musicalGuest}
-              </Typography>
-              <Chip 
-                label={isLive ? "PERFORMING LIVE!" : "Recorded Performance"} 
-                color={isLive ? "success" : "warning"} 
-                size="small"
-                sx={{ mb: 2 }}
-              />
-              <Typography variant="body1" color="text.secondary" className="text-friendly">
-                {isLive 
-                  ? "Perfect night to stay in and watch! 🍿" 
-                  : "Perfect night to go out and make your own memories! 🎉"
-                }
-              </Typography>
-            </Paper>
-          </Box>
-
-          {/* Action Buttons */}
-          <Box 
-            className="snl-mobile-padding" 
-            sx={{ 
-              display: 'flex', 
-              gap: { xs: 1, md: 2 }, 
-              justifyContent: 'center', 
-              flexDirection: { xs: 'column', sm: 'row' },
-              alignItems: 'center'
-            }}
+          {/* Musical Guest */}
+          <motion.div
+            className="text-center mb-8"
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 2.3, duration: 0.8 }}
           >
-            <Button 
-              variant="contained" 
-              size="large"
-              startIcon={<ShareIcon />}
-              className="snl-shadow"
-              sx={{ 
-                minWidth: { xs: '100%', sm: 200 },
-                maxWidth: { xs: 300, sm: 'none' },
-                backgroundColor: isLive ? hostTheme.colors.primary : undefined
-              }}
-            >
-              {isLive ? `Share ${hostTheme.emoji}` : 'Share the Joke'}
-            </Button>
-            <Button 
-              variant="outlined" 
-              size="large"
-              className="snl-shadow"
-              sx={{ 
-                minWidth: { xs: '100%', sm: 200 },
-                maxWidth: { xs: 300, sm: 'none' },
-                borderColor: isLive ? hostTheme.colors.primary : undefined,
-                color: isLive ? hostTheme.colors.primary : undefined
-              }}
-            >
-              Get Notifications
-            </Button>
-          </Box>
+            <div className="retro-card">
+              <div className="neon-text-cyan text-xl md:text-2xl mb-2">
+                MUSICAL GUEST
+              </div>
+              <div className="text-white text-lg md:text-xl">
+                {isLive ? "Boygenius" : "Classic Performance"}
+              </div>
+            </div>
+          </motion.div>
 
-          {/* Fun Footer */}
-          <Box sx={{ textAlign: 'center', mt: 2 }}>
-            <Typography variant="body2" color="text.secondary">
-              {isLive 
-                ? `Tune in to NBC at 11:30 PM ET for ${host}! ${hostTheme.emoji}`
-                : "Live from New York... well, not tonight! But maybe next week! 😄"
-              }
-            </Typography>
-          </Box>
+          {/* Action Message */}
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 3, duration: 0.8 }}
+          >
+            {isLive ? (
+              <div className="neon-text-green text-lg md:text-xl">
+                🏠 STAY IN & WATCH THE MAGIC!
+              </div>
+            ) : (
+              <div className="neon-text-orange text-lg md:text-xl">
+                🌃 GO OUT & LIVE YOUR LIFE!
+              </div>
+            )}
+          </motion.div>
 
-          {/* Demo Instructions */}
-          <Box sx={{ textAlign: 'center', mt: 2 }}>
-            <Paper sx={{ p: 2, backgroundColor: '#f5f5f5' }}>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
-                🎭 <strong>Demo Mode:</strong> Use the toggle in the top-right to switch between LIVE and RERUN states!
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                • LIVE shows Timothée Chalamet's themed experience with custom colors & catchphrases<br/>
-                • RERUN shows rotating SNL jokes that change every 5 seconds
-              </Typography>
-            </Paper>
-          </Box>
-        </Box>
-      </Container>
-    </>
+        </motion.div>
+      </div>
+    </div>
   );
 }
