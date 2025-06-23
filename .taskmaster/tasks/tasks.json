@@ -284,7 +284,7 @@
         "description": "Enhance the SNL status display to show upcoming Saturday information when users visit on non-Saturday days, including a countdown timer and appropriate messaging based on the day of the week.",
         "details": "1. Implement day detection logic:\n   - Use JavaScript's Date object to determine the current day of the week\n   - Calculate the date of the upcoming Saturday\n   - Determine the number of days until the next Saturday for countdown display\n\n2. Create conditional rendering logic:\n   - Display \"Tonight\" messaging for Saturday visits\n   - Display \"This Saturday\" messaging for Sunday through Friday visits\n   - Implement appropriate styling variations for each state\n\n3. Extend data fetching system for upcoming show information:\n   - Modify existing SWR hooks to fetch future episode data\n   - Update the API routes to support fetching upcoming episode details\n   - Implement caching strategy for upcoming show information\n   - Handle edge cases (e.g., season breaks, special episodes)\n\n4. Design and implement UI components:\n   - Create countdown timer component showing days/hours until Saturday's show\n   - Design responsive layout for both current and upcoming show information\n   - Implement smooth transitions between different states\n   - Ensure consistent styling with the existing UI\n\n5. Update global state management:\n   - Extend context provider to include upcoming show data\n   - Create new reducers for managing upcoming show state\n   - Implement proper error handling for future data fetching\n\n6. Optimize performance:\n   - Implement memoization for date calculations\n   - Ensure efficient re-rendering when countdown updates\n   - Use appropriate caching strategies for upcoming show data",
         "testStrategy": "1. Unit tests:\n   - Test day detection logic for all days of the week\n   - Verify date calculation for upcoming Saturday\n   - Test countdown calculation accuracy\n   - Validate conditional rendering logic\n\n2. Integration tests:\n   - Test data flow from API to UI components\n   - Verify proper state management for upcoming show data\n   - Test transitions between different day states\n\n3. UI/UX testing:\n   - Verify appropriate messaging displays based on current day\n   - Test countdown timer accuracy and formatting\n   - Ensure responsive design works across device sizes\n   - Validate accessibility of new components\n\n4. Mock testing:\n   - Create mock data for upcoming shows\n   - Test edge cases like season breaks or special episodes\n   - Simulate different days of the week to verify correct display\n\n5. Performance testing:\n   - Measure render performance with React DevTools\n   - Verify efficient re-rendering during countdown updates\n   - Test caching effectiveness for upcoming show data",
-        "status": "pending",
+        "status": "in-progress",
         "dependencies": [
           2,
           3
@@ -309,7 +309,7 @@
     ],
     "metadata": {
       "created": "2025-06-22T22:38:38.083Z",
-      "updated": "2025-06-23T04:28:57.812Z",
+      "updated": "2025-06-23T04:34:03.950Z",
       "description": "Tasks for master context"
     }
   }

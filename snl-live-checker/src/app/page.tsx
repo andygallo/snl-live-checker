@@ -11,6 +11,7 @@ import {
   LoadingSkeleton,
   EnhancedCountdown 
 } from './components';
+import { EnhancedStatusDisplay } from './components/EnhancedStatusDisplay';
 import { useSNLData, useScheduleData } from '../hooks/useSNLData';
 import { useSNLContext } from '../context/SNLContext';
 import { getNextLiveShow, getCurrentShow, isCurrentlyLive as checkIsLive } from '../utils/scheduleUtils';
@@ -179,9 +180,8 @@ export default function Home() {
           
           <SNLLogo />
           
-          <LiveStatusDisplay 
+          <EnhancedStatusDisplay 
             isLive={isLive} 
-            nextSNLDate={nextSNLDate} 
           />
 
           <HostGuestInfo 
