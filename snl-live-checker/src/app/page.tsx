@@ -8,10 +8,12 @@ import {
   TestModeToggle, 
   RetroBackground, 
   SNLLogo,
-  LoadingSkeleton 
+  LoadingSkeleton,
+  EnhancedCountdown 
 } from './components';
 import { useSNLData, useScheduleData } from '../hooks/useSNLData';
 import { useSNLContext } from '../context/SNLContext';
+import { getNextLiveShow, getCurrentShow, isCurrentlyLive as checkIsLive } from '../utils/scheduleUtils';
 
 export default function Home() {
   const [isTestMode, setIsTestMode] = useState(false);
@@ -64,14 +66,22 @@ export default function Home() {
     return false;
   };
 
-  // Determine live status - use real data if available, fallback to time-based detection
-  const isLiveFromData = state.snlData?.isLive ?? null;
-  const isLiveFromTime = isCurrentlyLive();
-  const isLive = isTestMode || isLiveFromData ?? isLiveFromTime;
+  // Enhanced schedule-based logic
+  const currentShow = getCurrentShow(state.schedule);
+  const nextShow = getNextLiveShow(state.schedule);
   
-  // Get host and musical guest from real data or fallback
-  const currentHost = state.host?.name || state.snlData?.host?.name || "Timothée Chalamet";
-  const currentMusicalGuest = state.musicalGuest?.name || state.snlData?.musicalGuest?.name || "Boygenius";
+  // Determine live status - use enhanced schedule data
+  const isLiveFromSchedule = currentShow?.isLive ?? null;
+  const isLiveFromData = state.snlData?.isLive ?? null;
+  const isLiveFromTime = checkIsLive();
+  const isLive = isTestMode || (isLiveFromSchedule ?? isLiveFromData ?? isLiveFromTime);
+  
+  // Get host and musical guest from enhanced schedule or fallback data
+  const currentHost = currentShow?.host || nextShow?.host || state.host?.name || state.snlData?.host?.name || "Timothée Chalamet";
+  const currentMusicalGuest = currentShow?.musicalGuest || nextShow?.musicalGuest || state.musicalGuest?.name || state.snlData?.musicalGuest?.name || "Boygenius";
+  
+  // Use next show date from schedule if available
+  const enhancedNextSNLDate = nextShow?.date || nextSNLDate;
 
   // Update context with fetched data
   useEffect(() => {
@@ -123,6 +133,16 @@ export default function Home() {
     );
   }
 
+  // Show loading skeleton while data is being fetched for the first time
+  if (state.isLoading && !state.snlData && !isTestMode) {
+    return (
+      <div className="retro-container">
+        <RetroBackground />
+        <LoadingSkeleton />
+      </div>
+    );
+  }
+
   return (
     <div className="retro-container">
       <RetroBackground />
@@ -152,11 +172,29 @@ export default function Home() {
 
           <HostGuestInfo 
             isLive={isLive}
-            host="Timothée Chalamet"
-            musicalGuest="Boygenius"
+            host={currentHost}
+            musicalGuest={currentMusicalGuest}
           />
 
         </motion.div>
+
+        {/* Enhanced Countdown Section */}
+        {!isLive && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2, duration: 0.8 }}
+            className="mt-8"
+          >
+            <EnhancedCountdown
+              targetDate={enhancedNextSNLDate}
+              showTitle={nextShow ? `Season ${nextShow.season} Episode ${nextShow.episode}` : "Next Live Show"}
+              host={currentHost}
+              musicalGuest={currentMusicalGuest}
+              className="max-w-2xl mx-auto"
+            />
+          </motion.div>
+        )}
       </div>
     </div>
   );
