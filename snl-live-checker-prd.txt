@@ -1,9 +1,9 @@
-# SNL Live Checker - Product Requirements Document (SIMPLIFIED)
+# SNL Live Checker - Product Requirements Document (ULTRA-SIMPLIFIED)
 
 ## Executive Summary
 
 **Product Name:** SNL Live Checker  
-**Vision:** The definitive, delightfully simple web app that instantly tells comedy enthusiasts whether Saturday Night Live is live tonight or a rerun, with shareable social graphics and community-driven accuracy.
+**Vision:** The simplest possible web app that instantly tells comedy enthusiasts whether Saturday Night Live is live tonight or a rerun, with easy social sharing.
 
 **Target Audience:** Comedy enthusiasts who want to know whether to stay in for live SNL or make other Saturday night plans.
 
@@ -22,7 +22,6 @@ Users visit the site on Saturday (or any day) to instantly know:
 ### Key Success Metrics
 - Weekly active users checking on Saturdays
 - Social shares of "watching live tonight" posts
-- Community reporting accuracy and engagement
 - Time spent on site (should be low - users get answer quickly)
 
 ---
@@ -66,47 +65,7 @@ Users visit the site on Saturday (or any day) to instantly know:
 - Copy link functionality
 - Download image option
 
-### 4. Community Reporting Feature
-**Real-Time Corrections:**
-- Simple "Report Issue" button on main page
-- Quick form for users to report incorrect information
-- Community validation system for accuracy
-- Real-time updates when corrections are verified
-
-**Reporting Options:**
-- Wrong host/guest information
-- Incorrect live/rerun status
-- Missing show information
-- Technical issues
-
-### 5. Admin Interface for Manual Data Entry
-**Admin Dashboard:**
-- Secure admin panel for manual data entry and corrections
-- Override system for when APIs provide incorrect information
-- Bulk episode data management
-- Community report review and approval system
-
-**Admin Capabilities:**
-- Set live/rerun status manually
-- Update host and musical guest information
-- Upload and manage photos
-- Review and approve community corrections
-- Manage seasonal break schedules
-
-### 6. Analytics and Performance Monitoring
-**User Analytics:**
-- Page visits by day/time
-- Social sharing click-through rates
-- Geographic user distribution
-- Popular sharing times and content
-
-**Performance Monitoring:**
-- API response times and reliability
-- Page load performance metrics
-- Error tracking and alerting
-- Community reporting accuracy rates
-
-### 7. Multi-Source Data Integration
+### 4. Multi-Source Data Integration
 **Primary Data Sources:**
 - **TVMaze API**: Free, reliable TV schedule API with SNL data
 - **TMDB (The Movie Database)**: Comprehensive entertainment database
@@ -123,8 +82,6 @@ Users visit the site on Saturday (or any day) to instantly know:
 
 **Fallback Strategy:**
 - Automatic failover between data sources
-- Manual entry backup system with admin interface
-- Community reporting feature for real-time corrections
 - Wikipedia scraping as last resort backup
 
 ---
@@ -142,13 +99,12 @@ Users visit the site on Saturday (or any day) to instantly know:
 - **Primary**: TV Guide API or TMDB (The Movie Database) for reliable TV schedules
 - **Secondary**: Entertainment databases like TVMaze API (free and reliable)
 - **Tertiary**: IMDb datasets or Rotten Tomatoes listings
-- **Backup**: Manual entry system with admin interface
-- **Community**: User reporting system for real-time corrections
+- **Backup**: Wikipedia scraping as last resort backup
 
 ### Performance Requirements
 - 99.9% uptime during SNL season
 - Sub-2 second page load times
-- Real-time community reporting integration
+- Reliable data accuracy
 
 ---
 
@@ -158,13 +114,11 @@ Users visit the site on Saturday (or any day) to instantly know:
 1. Lands on homepage with immediate live/rerun status
 2. Sees host/guest information clearly displayed
 3. Optional: Share status to social media
-4. Optional: Report any incorrect information
 
 ### Returning User
 1. Quick status confirmation
 2. Share with friends if live
 3. Use information to make evening plans
-4. Contribute to community accuracy
 
 ### Saturday Evening Check
 1. Quick status confirmation
@@ -191,23 +145,19 @@ Users visit the site on Saturday (or any day) to instantly know:
 
 ## Launch Strategy
 
-### Phase 1: MVP Launch (Material Design)
+### Phase 1: MVP Launch (Ultra-Simple)
 - Clean Material Design 3 interface
 - Core live/rerun detection with multiple data sources
 - Basic host/guest information with photos
 - Simple social sharing with pre-designed graphics
-- Community reporting system
-- Basic admin interface
 
 ### Phase 2: Enhanced Features
 - Custom graphics generation with Material Design styling
-- Advanced admin dashboard
-- Enhanced analytics and monitoring
+- Enhanced social sharing options
 - Historical data integration and trends
 
-### Phase 3: Community Optimization
-- Enhanced community features
-- Advanced analytics dashboard
+### Phase 3: Growth Optimization
+- Enhanced social features
 - Seasonal special events and themes
 - Performance optimizations
 
@@ -219,12 +169,10 @@ Users visit the site on Saturday (or any day) to instantly know:
 - 1,000+ unique visitors
 - 100+ social shares
 - Accurate live/rerun detection
-- Active community reporting
 
 ### Month 3 Goals
 - 10,000+ unique visitors
 - 1,000+ weekly social shares
-- High community reporting accuracy
 - Media mentions in comedy/entertainment blogs
 
 ### Long-term Vision
@@ -246,7 +194,7 @@ Users visit the site on Saturday (or any day) to instantly know:
 
 ### Backend
 - **Vercel/Netlify Functions**: No server management required
-- **Simple Database**: JSON files or lightweight database for admin data
+- **Static Data**: JSON files for simple data storage
 - **Cron Jobs**: Automated data refresh using platform-provided schedulers
 - **Canvas API**: Browser-based image generation for social graphics
 
@@ -255,7 +203,6 @@ Users visit the site on Saturday (or any day) to instantly know:
 - **Custom Domain**: Easy to connect your own domain name
 - **SSL/HTTPS**: Automatically provided by hosting platform
 - **Global CDN**: Built-in fast global distribution
-- **Analytics**: Simple integration with Google Analytics or Vercel Analytics
 
 ---
 
@@ -263,22 +210,19 @@ Users visit the site on Saturday (or any day) to instantly know:
 
 ### Data Accuracy Risks
 - Multiple data source verification
-- Community reporting system
-- Manual override capabilities via admin interface
 - Clear disclaimers about accuracy
+- Graceful degradation when data is unavailable
 
 ### Legal/Copyright Risks
 - Fair use compliance for SNL references
 - Proper photo attribution and licensing
-- Terms of service for user-generated content
 - NBC relationship management
 
 ### Technical Risks
 - Redundant hosting infrastructure
 - Graceful degradation for API failures
 - Regular backup and recovery testing
-- Performance monitoring and optimization
 
 ---
 
-This simplified PRD focuses on core functionality while maintaining the viral potential through social sharing and community engagement, without the complexity of user authentication or SMS notifications. 
+This ultra-simplified PRD focuses purely on the core SNL checking functionality and social sharing, creating the fastest possible path to a working prototype. 

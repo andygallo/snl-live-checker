@@ -218,17 +218,6 @@
         "subtasks": []
       },
       {
-        "id": 7,
-        "title": "Develop Admin Interface for Manual Data Entry",
-        "description": "Create a simple admin interface for manual data entry as a core feature for the simplified prototype.",
-        "status": "pending",
-        "dependencies": [],
-        "priority": "high",
-        "details": "1. Design a straightforward admin dashboard using MUI components\n2. Implement forms for manual entry of show status, host, and musical guest information\n3. Create API routes for data manipulation\n4. Implement basic access protection (no complex user management)\n5. Add audit logging for all manual data changes\n6. Implement data validation and error handling\n7. Create a simple workflow for reviewing and approving manual entries",
-        "testStrategy": "1. Test basic access protection\n2. Verify data validation and error handling\n3. Test audit logging functionality\n4. Ensure proper integration with main data flow",
-        "subtasks": []
-      },
-      {
         "id": 8,
         "title": "Implement Progressive Web App (PWA) Features",
         "description": "Transform the web application into a Progressive Web App for enhanced user experience and offline capabilities.",
@@ -241,34 +230,6 @@
           3
         ],
         "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 9,
-        "title": "Implement Analytics and Performance Monitoring",
-        "description": "Set up comprehensive analytics and performance monitoring to track user engagement and application performance for the simplified prototype.",
-        "status": "pending",
-        "dependencies": [
-          2,
-          3
-        ],
-        "priority": "high",
-        "details": "1. Integrate Google Analytics 4 for user behavior tracking\n2. Implement custom event tracking for key user actions, with focus on social sharing and community reporting features\n3. Set up performance monitoring using Next.js Analytics or Vercel Analytics\n4. Create a simple dashboard for visualizing key metrics (visits, shares, community report accuracy)\n5. Implement error tracking and reporting using Sentry (latest version)\n6. Set up automated performance testing using Lighthouse CI\n7. Focus on tracking core metrics for the simplified prototype",
-        "testStrategy": "1. Verify accurate data collection in Google Analytics\n2. Test custom event tracking for social sharing and community reporting features\n3. Ensure performance metrics are accurately reported\n4. Test error reporting and alerts\n5. Validate that analytics dashboard correctly displays key metrics",
-        "subtasks": []
-      },
-      {
-        "id": 10,
-        "title": "Implement Community Reporting Feature",
-        "description": "Create a simple system for anonymous users to report inaccuracies or provide real-time corrections to SNL information.",
-        "status": "pending",
-        "dependencies": [
-          2,
-          3
-        ],
-        "priority": "high",
-        "details": "1. Design and implement a simple, user-friendly reporting interface that doesn't require user accounts\n2. Create API endpoints for submitting and managing anonymous reports\n3. Implement a basic moderation queue for reviewing user submissions\n4. Set up notifications for administrators on new reports\n5. Implement basic validation and spam prevention measures\n6. Add a 'community verified' badge for confirmed information",
-        "testStrategy": "1. Test anonymous report submission process\n2. Verify moderation queue functionality\n3. Test admin notifications and review process\n4. Ensure proper handling of high report volumes\n5. Test spam prevention measures",
         "subtasks": []
       },
       {
