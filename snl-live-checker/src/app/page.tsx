@@ -8,8 +8,7 @@ import {
   TestModeToggle, 
   RetroBackground, 
   SNLLogo,
-  LoadingSkeleton,
-  EnhancedCountdown 
+  LoadingSkeleton
 } from './components';
 import { EnhancedStatusDisplay } from './components/EnhancedStatusDisplay';
 import { useSNLData, useScheduleData } from '../hooks/useSNLData';
@@ -192,23 +191,6 @@ export default function Home() {
 
         </motion.div>
 
-        {/* Enhanced Countdown Section */}
-        {!isLive && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2, duration: 0.8 }}
-            className="mt-8"
-          >
-            <EnhancedCountdown
-              targetDate={enhancedNextSNLDate}
-              showTitle={nextShow ? `Season ${nextShow.season} Episode ${nextShow.episode}` : "Next Live Show"}
-              host={currentHost}
-              musicalGuest={currentMusicalGuest}
-              className="max-w-2xl mx-auto"
-            />
-          </motion.div>
-        )}
       </main>
     </div>
   );

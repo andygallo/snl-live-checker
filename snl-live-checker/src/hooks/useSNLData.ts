@@ -39,7 +39,13 @@ export const useSNLData = (): UseSNLDataResult => {
       errorRetryInterval: 5000,
       shouldRetryOnError: (error) => {
         // Don't retry on 4xx errors (client errors)
-        return error.status >= 500;
+        // Safely check if error has status property
+        const status = (error as any)?.status || (error as any)?.info?.status;
+        if (typeof status === 'number') {
+          return status >= 500;
+        }
+        // If no status available, retry for unknown errors
+        return true;
       },
     }
   );
