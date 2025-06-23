@@ -81,9 +81,9 @@ const EnhancedCountdownRenderer = ({ days, hours, minutes, seconds, completed, d
             className="neon-text-yellow"
             sx={{
               fontWeight: 'bold',
-              fontSize: { xs: '1.5rem', md: '2.5rem' },
+              fontSize: { xs: '1rem', md: '1.5rem' },
               fontFamily: '"Orbitron", "Roboto Mono", monospace',
-              minWidth: { xs: '60px', md: '80px' }
+              minWidth: { xs: '40px', md: '50px' }
             }}
           >
             {String(unit.value).padStart(2, '0')}
@@ -92,7 +92,7 @@ const EnhancedCountdownRenderer = ({ days, hours, minutes, seconds, completed, d
             variant="caption"
             sx={{
               color: 'rgba(255, 255, 255, 0.8)',
-              fontSize: { xs: '0.625rem', md: '0.75rem' },
+              fontSize: { xs: '0.5rem', md: '0.625rem' },
               fontWeight: 'bold',
               fontFamily: '"Orbitron", "Roboto Mono", monospace',
             }}
@@ -221,18 +221,18 @@ export const EnhancedStatusDisplay: React.FC<EnhancedStatusDisplayProps> = ({
               background: 'linear-gradient(45deg, rgba(33, 150, 243, 0.1), rgba(103, 58, 183, 0.1))',
               border: '1px solid rgba(33, 150, 243, 0.3)',
               borderRadius: '16px',
-              padding: '24px',
+              padding: '16px',
               backdropFilter: 'blur(8px)',
             }}
           >
             {/* Primary Message */}
-            <Box textAlign="center" mb={3}>
+            <Box textAlign="center" mb={2}>
               <Typography
                 variant="h4"
                 className="neon-text-cyan"
                 sx={{
                   fontWeight: 'bold',
-                  fontSize: { xs: '1.75rem', md: '2.5rem' },
+                  fontSize: { xs: '1.25rem', md: '1.75rem' },
                   fontFamily: '"Orbitron", "Roboto Mono", monospace',
                   mb: 1
                 }}
@@ -244,39 +244,35 @@ export const EnhancedStatusDisplay: React.FC<EnhancedStatusDisplayProps> = ({
                 variant="body1"
                 sx={{
                   color: 'rgba(255, 255, 255, 0.8)',
-                  fontSize: { xs: '0.875rem', md: '1rem' },
+                  fontSize: { xs: '0.75rem', md: '0.875rem' },
                 }}
               >
                 {dayInfo.messaging.secondary}
               </Typography>
             </Box>
 
-
-
             {/* Countdown Timer */}
-            <Box textAlign="center" mb={3}>
+            <Box textAlign="center" mb={2}>
               <Typography
                 variant="h6"
                 className="neon-text-blue"
                 sx={{
                   fontWeight: 'bold',
-                  fontSize: { xs: '1rem', md: '1.25rem' },
-                  mb: 2,
+                  fontSize: { xs: '0.875rem', md: '1rem' },
+                  mb: 1,
                   fontFamily: '"Orbitron", "Roboto Mono", monospace',
                 }}
               >
                 {dayInfo.messaging.countdownLabel}:
               </Typography>
               <Countdown
-                key={`countdown-${dayInfo.upcomingSaturday.toDateString()}`}
+                key={dayInfo.upcomingSaturday.toDateString()}
                 date={dayInfo.upcomingSaturday}
                 renderer={(props) => <EnhancedCountdownRenderer {...props} dayInfo={dayInfo} />}
                 intervalDelay={1000}
-                precision={0}
+                precision={3}
               />
             </Box>
-
-
           </Paper>
         </motion.div>
       )}

@@ -199,7 +199,7 @@ export default function Home() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-8"
+            className="text-center mb-4"
           >
             <Typography
               variant="h2"
@@ -207,10 +207,10 @@ export default function Home() {
               className="neon-text-pink"
               sx={{
                 fontWeight: 'bold',
-                fontSize: { xs: '2rem', md: '3rem' },
+                fontSize: { xs: '1.5rem', md: '2rem' },
                 fontFamily: '"Orbitron", "Roboto Mono", monospace',
                 textAlign: 'center',
-                mb: 4
+                mb: 2
               }}
             >
               Is Saturday Night Live this week?
@@ -218,43 +218,46 @@ export default function Home() {
             
             {/* Big YES/NO Answer */}
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.5, duration: 0.6, type: "spring" }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              className="mb-4"
             >
-                             <Typography
+               <Typography
                  variant="h1"
                  component="div"
-                 className={isNewEpisode ? "neon-text-green" : "neon-text-red"}
+                 className={isLive ? "neon-text-red" : isNewEpisode ? "neon-text-green" : "neon-text-orange"}
                  sx={{
                    fontWeight: 'bold',
-                   fontSize: { xs: '4rem', md: '6rem' },
+                   fontSize: { xs: '2.5rem', md: '3.5rem' },
                    fontFamily: '"Orbitron", "Roboto Mono", monospace',
                    textAlign: 'center',
-                   textShadow: isNewEpisode 
-                     ? '0 0 20px #00ff00, 0 0 40px #00ff00' 
-                     : '0 0 20px #ff0000, 0 0 40px #ff0000',
-                   mb: 2
+                   textShadow: isLive 
+                     ? '0 0 20px #ff0000, 0 0 40px #ff0000' 
+                     : isNewEpisode 
+                       ? '0 0 20px #00ff00, 0 0 40px #00ff00'
+                       : '0 0 20px #ff8800, 0 0 40px #ff8800',
+                   mb: 1
                  }}
                  role="alert"
                  aria-live="assertive"
                >
-                 {isNewEpisode ? "YES!" : "NO"}
+                 {isLive ? "YES!" : isNewEpisode ? "YES!" : "NOPE!"}
                </Typography>
                <Typography
                  variant="h6"
                  sx={{
                    color: 'rgba(255, 255, 255, 0.8)',
-                   fontSize: { xs: '1rem', md: '1.25rem' },
+                   fontSize: { xs: '0.875rem', md: '1rem' },
+                   fontFamily: '"Orbitron", "Roboto Mono", monospace',
                    textAlign: 'center',
-                   mb: 4
                  }}
                >
                  {isLive 
-                   ? "It's live right now!" 
+                   ? "SNL is LIVE right now!" 
                    : isNewEpisode 
-                     ? "New episode this Saturday" 
-                     : "No new episode this week"}
+                     ? "New episode this Saturday!" 
+                     : "It's a rerun week - time for church!"}
                </Typography>
             </motion.div>
           </motion.div>
