@@ -58,9 +58,7 @@
             "id": 5,
             "title": "Implement responsive design and configure for static export",
             "description": "Use MUI's Grid system with Tailwind utility classes for responsiveness and set up next.config.js for static export",
-            "dependencies": [
-              4
-            ],
+            "dependencies": [],
             "details": "Implement responsive Grid layout using MUI and enhance with Tailwind classes. Configure next.config.js for static HTML export.",
             "status": "done",
             "testStrategy": "Test responsiveness across various screen sizes and verify successful static export build"
@@ -197,96 +195,13 @@
             "dependencies": [
               1,
               2,
-              3,
-              4
+              3
             ],
             "details": "Add proper ARIA labels and use semantic HTML throughout the component. Ensure keyboard navigation works correctly. Perform final styling adjustments for visual consistency.",
             "status": "done",
             "testStrategy": "Conduct accessibility audit using tools like axe-core. Perform manual testing with screen readers and keyboard-only navigation."
           }
         ]
-      },
-      {
-        "id": 4,
-        "title": "Implement User Authentication and Preferences",
-        "description": "Set up user authentication and preference management using Supabase for backend services.",
-        "details": "1. Set up Supabase project and install supabase-js (v2.24.0 or latest)\n2. Implement sign-up and login functionality using Supabase Auth\n3. Create user preferences table in Supabase\n4. Implement preference management UI using MUI components\n5. Set up real-time subscription for user preference updates\n6. Implement secure session management and token refresh\n7. Add social login options (Google, Facebook) if desired",
-        "testStrategy": "1. Test user registration and login flows\n2. Verify preference updates in real-time\n3. Test token refresh and session management\n4. Ensure proper error handling for auth failures",
-        "priority": "medium",
-        "dependencies": [
-          1,
-          2
-        ],
-        "status": "pending",
-        "subtasks": [
-          {
-            "id": 1,
-            "title": "Set up Supabase project and install dependencies",
-            "description": "Initialize the Supabase project and install necessary dependencies including supabase-js",
-            "dependencies": [],
-            "details": "Create a new Supabase project, obtain API keys, and install supabase-js (v2.24.0 or latest) in the project. Set up environment variables for Supabase URL and API key.\n<info added on 2025-06-23T01:33:06.457Z>\nCOMPLETED ITEMS:\n✅ Installed Supabase dependencies (@supabase/supabase-js@^2.39.0, @supabase/auth-helpers-nextjs@^0.8.7)\n✅ Created environment variables template (.env.local with proper variables)\n✅ Created Supabase client configuration (src/lib/supabase.ts)\n✅ Created comprehensive database TypeScript types (src/types/database.ts)\n\nSTILL NEEDED:\n🔄 Need to actually create Supabase project online and get real API keys\n🔄 Need to populate .env.local with actual Supabase project credentials\n🔄 Test the Supabase connection to verify setup works\n\nNext step: Create actual Supabase project and configure with real credentials.\n</info added on 2025-06-23T01:33:06.457Z>\n<info added on 2025-06-23T01:35:19.572Z>\nCOMPLETED ITEMS:\n✅ Created Supabase project at https://supabase.com/dashboard\n✅ Named project \"snl-live-checker\" and set secure database password\n✅ Selected appropriate region for optimal performance\n✅ Retrieved API credentials from Settings > API section\n✅ Updated .env.local with actual credentials:\n   - NEXT_PUBLIC_SUPABASE_URL\n   - NEXT_PUBLIC_SUPABASE_ANON_KEY\n   - SUPABASE_SERVICE_ROLE_KEY\n✅ Tested connection to Supabase and verified setup works correctly\n\nThe Supabase project is now fully configured with real credentials. All environment variables are properly set up, and the connection has been tested successfully. The project is ready for implementing authentication features.\n</info added on 2025-06-23T01:35:19.572Z>\n<info added on 2025-06-23T01:39:42.487Z>\nCOMPLETED ITEMS:\n✅ Moved Supabase client configuration to correct location: snl-live-checker/src/lib/supabase.ts\n✅ Moved database types to correct location: snl-live-checker/src/types/database.ts\n✅ Created comprehensive Supabase connection test: snl-live-checker/src/lib/test-supabase.ts\n✅ Environment template exists: snl-live-checker/.env.local (with placeholders)\n\nNEXT STEPS TO COMPLETE SUBTASK 4.1:\n1. **Create Supabase Project Online**:\n   - Go to https://supabase.com/dashboard\n   - Sign in/create account\n   - Click \"New Project\" \n   - Name: \"snl-live-checker\" or \"prototype-2\"\n   - Set secure database password (save it!)\n   - Choose region close to users\n   - Click \"Create new project\"\n\n2. **Get Real API Credentials**:\n   - Once project loads, go to Settings > API\n   - Copy \"Project URL\" → NEXT_PUBLIC_SUPABASE_URL\n   - Copy \"anon public\" key → NEXT_PUBLIC_SUPABASE_ANON_KEY  \n   - Copy \"service_role\" key → SUPABASE_SERVICE_ROLE_KEY\n\n3. **Update Environment File**:\n   - Edit snl-live-checker/.env.local\n   - Replace placeholder values with real credentials\n\n4. **Test Connection**:\n   - Run the test function to verify setup works\n</info added on 2025-06-23T01:39:42.487Z>",
-            "status": "in-progress",
-            "testStrategy": "Verify Supabase connection by making a test query to the database"
-          },
-          {
-            "id": 2,
-            "title": "Implement sign-up and login functionality",
-            "description": "Create sign-up and login forms using MUI components and integrate with Supabase Auth",
-            "dependencies": [
-              1
-            ],
-            "details": "Develop sign-up and login forms using MUI components. Implement form validation and error handling. Use Supabase Auth methods for user registration and authentication.",
-            "status": "pending",
-            "testStrategy": "Test user registration and login with valid and invalid credentials"
-          },
-          {
-            "id": 3,
-            "title": "Create and manage user preferences",
-            "description": "Set up user preferences table in Supabase and implement CRUD operations",
-            "dependencies": [
-              2
-            ],
-            "details": "Create a 'user_preferences' table in Supabase. Implement functions to create, read, update, and delete user preferences. Ensure proper data validation and error handling.",
-            "status": "pending",
-            "testStrategy": "Perform CRUD operations on user preferences and verify data integrity"
-          },
-          {
-            "id": 4,
-            "title": "Develop preference management UI",
-            "description": "Create a user interface for managing preferences using MUI components",
-            "dependencies": [
-              3
-            ],
-            "details": "Design and implement a user-friendly interface for viewing and editing preferences. Use MUI components for consistency with the overall design. Implement real-time updates using Supabase subscriptions.",
-            "status": "pending",
-            "testStrategy": "Test UI responsiveness and real-time updates of preference changes"
-          },
-          {
-            "id": 5,
-            "title": "Implement secure session management",
-            "description": "Set up secure session handling and token refresh mechanism",
-            "dependencies": [
-              2
-            ],
-            "details": "Implement secure storage of session tokens. Set up automatic token refresh to maintain user sessions. Handle session expiration and logout functionality. Optionally, add social login options for Google and Facebook.",
-            "status": "pending",
-            "testStrategy": "Test session persistence across page reloads and automatic token refresh"
-          }
-        ]
-      },
-      {
-        "id": 5,
-        "title": "Develop Notification System",
-        "description": "Implement a flexible notification system supporting email and SMS notifications with user preferences.",
-        "details": "1. Set up SendGrid API for email notifications (use @sendgrid/mail v7.7.0 or latest)\n2. Implement Twilio API for SMS notifications (if budget allows)\n3. Create notification templates for different scenarios (live shows, reruns, season returns)\n4. Implement notification scheduling based on user preferences\n5. Set up serverless functions for sending notifications\n6. Implement notification history and management in user dashboard\n7. Ensure compliance with anti-spam regulations",
-        "testStrategy": "1. Unit test notification generation logic\n2. Integration test with SendGrid and Twilio APIs\n3. Test scheduling accuracy\n4. Verify notification content and formatting\n5. Load test notification system",
-        "priority": "medium",
-        "dependencies": [
-          2,
-          4
-        ],
-        "status": "pending",
-        "subtasks": []
       },
       {
         "id": 6,
@@ -305,15 +220,12 @@
       {
         "id": 7,
         "title": "Develop Admin Interface for Manual Data Entry",
-        "description": "Create a simple admin interface for manual data entry as a fallback for API failures.",
-        "details": "1. Design admin dashboard using MUI components\n2. Implement forms for manual entry of show status, host, and musical guest information\n3. Create admin-only API routes for data manipulation\n4. Implement role-based access control using Supabase policies\n5. Add audit logging for all manual data changes\n6. Implement data validation and error handling\n7. Create a simple workflow for reviewing and approving manual entries",
-        "testStrategy": "1. Test admin authentication and authorization\n2. Verify data validation and error handling\n3. Test audit logging functionality\n4. Ensure proper integration with main data flow",
-        "priority": "low",
-        "dependencies": [
-          2,
-          4
-        ],
+        "description": "Create a simple admin interface for manual data entry as a core feature for the simplified prototype.",
         "status": "pending",
+        "dependencies": [],
+        "priority": "high",
+        "details": "1. Design a straightforward admin dashboard using MUI components\n2. Implement forms for manual entry of show status, host, and musical guest information\n3. Create API routes for data manipulation\n4. Implement basic access protection (no complex user management)\n5. Add audit logging for all manual data changes\n6. Implement data validation and error handling\n7. Create a simple workflow for reviewing and approving manual entries",
+        "testStrategy": "1. Test basic access protection\n2. Verify data validation and error handling\n3. Test audit logging functionality\n4. Ensure proper integration with main data flow",
         "subtasks": []
       },
       {
@@ -334,32 +246,29 @@
       {
         "id": 9,
         "title": "Implement Analytics and Performance Monitoring",
-        "description": "Set up comprehensive analytics and performance monitoring to track user engagement and application performance.",
-        "details": "1. Integrate Google Analytics 4 for user behavior tracking\n2. Implement custom event tracking for key user actions\n3. Set up performance monitoring using Next.js Analytics or Vercel Analytics\n4. Create a dashboard for visualizing key metrics (visits, shares, notifications)\n5. Implement error tracking and reporting using Sentry (latest version)\n6. Set up automated performance testing using Lighthouse CI\n7. Implement A/B testing framework for future optimizations",
-        "testStrategy": "1. Verify accurate data collection in Google Analytics\n2. Test custom event tracking\n3. Ensure performance metrics are accurately reported\n4. Test error reporting and alerts",
-        "priority": "low",
+        "description": "Set up comprehensive analytics and performance monitoring to track user engagement and application performance for the simplified prototype.",
+        "status": "pending",
         "dependencies": [
           2,
-          3,
-          5,
-          6
+          3
         ],
-        "status": "pending",
+        "priority": "high",
+        "details": "1. Integrate Google Analytics 4 for user behavior tracking\n2. Implement custom event tracking for key user actions, with focus on social sharing and community reporting features\n3. Set up performance monitoring using Next.js Analytics or Vercel Analytics\n4. Create a simple dashboard for visualizing key metrics (visits, shares, community report accuracy)\n5. Implement error tracking and reporting using Sentry (latest version)\n6. Set up automated performance testing using Lighthouse CI\n7. Focus on tracking core metrics for the simplified prototype",
+        "testStrategy": "1. Verify accurate data collection in Google Analytics\n2. Test custom event tracking for social sharing and community reporting features\n3. Ensure performance metrics are accurately reported\n4. Test error reporting and alerts\n5. Validate that analytics dashboard correctly displays key metrics",
         "subtasks": []
       },
       {
         "id": 10,
         "title": "Implement Community Reporting Feature",
-        "description": "Create a system for users to report inaccuracies or provide real-time corrections to SNL information.",
-        "details": "1. Design and implement a user-friendly reporting interface\n2. Create API endpoints for submitting and managing reports\n3. Implement a moderation queue for reviewing user submissions\n4. Set up notifications for administrators on new reports\n5. Create a voting or verification system for community-sourced information\n6. Implement rate limiting and spam prevention measures\n7. Add a 'community verified' badge for confirmed information",
-        "testStrategy": "1. Test report submission process\n2. Verify moderation queue functionality\n3. Test admin notifications and review process\n4. Ensure proper handling of high report volumes",
-        "priority": "low",
+        "description": "Create a simple system for anonymous users to report inaccuracies or provide real-time corrections to SNL information.",
+        "status": "pending",
         "dependencies": [
           2,
-          3,
-          4
+          3
         ],
-        "status": "pending",
+        "priority": "high",
+        "details": "1. Design and implement a simple, user-friendly reporting interface that doesn't require user accounts\n2. Create API endpoints for submitting and managing anonymous reports\n3. Implement a basic moderation queue for reviewing user submissions\n4. Set up notifications for administrators on new reports\n5. Implement basic validation and spam prevention measures\n6. Add a 'community verified' badge for confirmed information",
+        "testStrategy": "1. Test anonymous report submission process\n2. Verify moderation queue functionality\n3. Test admin notifications and review process\n4. Ensure proper handling of high report volumes\n5. Test spam prevention measures",
         "subtasks": []
       },
       {
@@ -388,36 +297,6 @@
           2,
           3,
           8
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 13,
-        "title": "Implement A/B Testing Framework",
-        "description": "Set up an A/B testing framework to optimize user engagement and conversion rates.",
-        "details": "1. Integrate an A/B testing library like react-ab-test (v2.2.0 or latest)\n2. Set up experiment configurations for different UI variations\n3. Implement tracking for conversion events (e.g., notification sign-ups, shares)\n4. Create a dashboard for visualizing A/B test results\n5. Implement statistical significance calculations\n6. Set up automated email reports for test results\n7. Ensure GDPR compliance for user data collection in tests",
-        "testStrategy": "1. Verify correct distribution of users into test groups\n2. Test tracking of conversion events\n3. Validate statistical calculations\n4. Ensure proper handling of user opt-outs",
-        "priority": "low",
-        "dependencies": [
-          3,
-          5,
-          6,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 14,
-        "title": "Implement Internationalization (i18n)",
-        "description": "Add support for multiple languages to expand the application's reach to a global audience.",
-        "details": "1. Integrate next-i18next (v13.0.3 or latest) for translation management\n2. Extract all user-facing strings into translation files\n3. Implement language selection UI\n4. Set up automatic language detection based on user's browser settings\n5. Ensure proper handling of RTL languages\n6. Implement dynamic loading of translation files\n7. Optimize for SEO with hreflang tags and translated metadata",
-        "testStrategy": "1. Verify correct rendering of translated content\n2. Test language switching functionality\n3. Ensure proper handling of plurals and date formats\n4. Test RTL layout in supported languages",
-        "priority": "low",
-        "dependencies": [
-          1,
-          3
         ],
         "status": "pending",
         "subtasks": []

@@ -1,9 +1,9 @@
-# SNL Live Checker - Product Requirements Document
+# SNL Live Checker - Product Requirements Document (SIMPLIFIED)
 
 ## Executive Summary
 
 **Product Name:** SNL Live Checker  
-**Vision:** The definitive, delightfully simple web app that instantly tells comedy enthusiasts whether Saturday Night Live is live tonight or a rerun, with shareable social graphics and smart notifications.
+**Vision:** The definitive, delightfully simple web app that instantly tells comedy enthusiasts whether Saturday Night Live is live tonight or a rerun, with shareable social graphics and community-driven accuracy.
 
 **Target Audience:** Comedy enthusiasts who want to know whether to stay in for live SNL or make other Saturday night plans.
 
@@ -22,7 +22,7 @@ Users visit the site on Saturday (or any day) to instantly know:
 ### Key Success Metrics
 - Weekly active users checking on Saturdays
 - Social shares of "watching live tonight" posts
-- Notification sign-up rate and engagement
+- Community reporting accuracy and engagement
 - Time spent on site (should be low - users get answer quickly)
 
 ---
@@ -51,12 +51,7 @@ Users visit the site on Saturday (or any day) to instantly know:
 **During SNL Season Breaks:**
 - Clear message: "SNL is on break"
 - Return date with countdown timer
-- Friendly message: "SNL returns on [date] - we'll let you know!"
-- No live/rerun notifications sent during breaks
-
-**Return Notifications:**
-- Special "We're back!" notification sent one week before season return
-- Sent on the Saturday before the first live show back
+- Friendly message: "SNL returns on [date] - check back then!"
 
 ### 3. Social Sharing System
 **Custom Graphics Generation:**
@@ -71,19 +66,47 @@ Users visit the site on Saturday (or any day) to instantly know:
 - Copy link functionality
 - Download image option
 
-### 4. Notification System
-**User Preferences:**
-- Email and/or SMS notifications
-- Timing preference (default: 2 PM on show day)
-- Custom timing options: morning, afternoon, evening
-- Frequency: only live shows, or include rerun reminders
+### 4. Community Reporting Feature
+**Real-Time Corrections:**
+- Simple "Report Issue" button on main page
+- Quick form for users to report incorrect information
+- Community validation system for accuracy
+- Real-time updates when corrections are verified
 
-**Notification Content:**
-- Live shows: "SNL is LIVE tonight with [Host] and [Musical Guest]!"
-- Season returns: "SNL is back! Live show next Saturday with [Host]"
-- No notifications during breaks unless it's the return announcement
+**Reporting Options:**
+- Wrong host/guest information
+- Incorrect live/rerun status
+- Missing show information
+- Technical issues
 
-### 5. Multi-Source Data Integration
+### 5. Admin Interface for Manual Data Entry
+**Admin Dashboard:**
+- Secure admin panel for manual data entry and corrections
+- Override system for when APIs provide incorrect information
+- Bulk episode data management
+- Community report review and approval system
+
+**Admin Capabilities:**
+- Set live/rerun status manually
+- Update host and musical guest information
+- Upload and manage photos
+- Review and approve community corrections
+- Manage seasonal break schedules
+
+### 6. Analytics and Performance Monitoring
+**User Analytics:**
+- Page visits by day/time
+- Social sharing click-through rates
+- Geographic user distribution
+- Popular sharing times and content
+
+**Performance Monitoring:**
+- API response times and reliability
+- Page load performance metrics
+- Error tracking and alerting
+- Community reporting accuracy rates
+
+### 7. Multi-Source Data Integration
 **Primary Data Sources:**
 - **TVMaze API**: Free, reliable TV schedule API with SNL data
 - **TMDB (The Movie Database)**: Comprehensive entertainment database
@@ -100,7 +123,7 @@ Users visit the site on Saturday (or any day) to instantly know:
 
 **Fallback Strategy:**
 - Automatic failover between data sources
-- Manual entry backup system with simple admin interface
+- Manual entry backup system with admin interface
 - Community reporting feature for real-time corrections
 - Wikipedia scraping as last resort backup
 
@@ -108,30 +131,24 @@ Users visit the site on Saturday (or any day) to instantly know:
 
 ## Technical Requirements
 
-### Platform (Non-Technical Friendly)
-- **Static Web Application**: Built with modern tools but deployable as simple HTML/CSS/JS
+### Platform
+- **Static Web Application**: Built with Next.js but deployable as simple HTML/CSS/JS
 - **One-Click Deployment**: Using platforms like Vercel, Netlify, or GitHub Pages
 - **Google Material Design**: Clean, modern UI using Material Design 3 components
 - **Mobile-First Responsive**: Works perfectly on all devices
 - **Progressive Web App (PWA)**: Can be "installed" on phones like a native app
 
-### Data Sources (Multiple Options)
+### Data Sources
 - **Primary**: TV Guide API or TMDB (The Movie Database) for reliable TV schedules
 - **Secondary**: Entertainment databases like TVMaze API (free and reliable)
 - **Tertiary**: IMDb datasets or Rotten Tomatoes listings
-- **Backup**: Manual entry system with simple admin interface
+- **Backup**: Manual entry system with admin interface
 - **Community**: User reporting system for real-time corrections
 
 ### Performance Requirements
 - 99.9% uptime during SNL season
 - Sub-2 second page load times
-- Reliable notification delivery (>95% success rate)
-
-### Analytics
-- Page visits by day/time
-- Social sharing click-through rates
-- Notification engagement rates
-- Geographic user distribution
+- Real-time community reporting integration
 
 ---
 
@@ -140,13 +157,14 @@ Users visit the site on Saturday (or any day) to instantly know:
 ### First-Time Visitor
 1. Lands on homepage with immediate live/rerun status
 2. Sees host/guest information clearly displayed
-3. Optional: Sign up for notifications with one-click
-4. Optional: Share status to social media
+3. Optional: Share status to social media
+4. Optional: Report any incorrect information
 
-### Returning User (Notifications Enabled)
-1. Receives notification at preferred time
-2. Can click to visit site for full details
-3. One-click social sharing from notification
+### Returning User
+1. Quick status confirmation
+2. Share with friends if live
+3. Use information to make evening plans
+4. Contribute to community accuracy
 
 ### Saturday Evening Check
 1. Quick status confirmation
@@ -171,30 +189,6 @@ Users visit the site on Saturday (or any day) to instantly know:
 
 ---
 
-## Implementation Path for Non-Technical Users
-
-### Option 1: Easiest (No-Code)
-**Recommended for: Complete beginners**
-1. **Webflow + Zapier**: Build the UI in Webflow, use Zapier to connect APIs
-2. **Bubble**: All-in-one no-code platform with database and API integrations
-3. **Timeline**: 2-4 weeks to launch
-4. **Cost**: $20-50/month after free trials
-
-### Option 2: Low-Code (Recommended)
-**Recommended for: Willing to learn basics**
-1. **Next.js Template**: Start with a pre-built Material Design template
-2. **Supabase**: Handle database and user management
-3. **Vercel**: One-click deployment and hosting
-4. **Timeline**: 4-8 weeks with tutorials
-5. **Cost**: Free for small scale, $20/month for growth
-
-### Option 3: Custom Development
-**Recommended for: Hiring a developer**
-1. Find developer on Upwork/Fiverr with Next.js + Material-UI experience
-2. Use this PRD as specification document
-3. **Timeline**: 6-12 weeks
-4. **Cost**: $2,000-8,000 depending on features
-
 ## Launch Strategy
 
 ### Phase 1: MVP Launch (Material Design)
@@ -202,19 +196,20 @@ Users visit the site on Saturday (or any day) to instantly know:
 - Core live/rerun detection with multiple data sources
 - Basic host/guest information with photos
 - Simple social sharing with pre-designed graphics
-- Email notifications with beautiful templates
+- Community reporting system
+- Basic admin interface
 
 ### Phase 2: Enhanced Features
 - Custom graphics generation with Material Design styling
-- SMS notifications
-- Advanced user preferences dashboard
+- Advanced admin dashboard
+- Enhanced analytics and monitoring
 - Historical data integration and trends
 
-### Phase 3: Viral Optimization
-- Enhanced social features with animated graphics
-- Community engagement elements
-- Push notifications (PWA)
+### Phase 3: Community Optimization
+- Enhanced community features
+- Advanced analytics dashboard
 - Seasonal special events and themes
+- Performance optimizations
 
 ---
 
@@ -222,14 +217,14 @@ Users visit the site on Saturday (or any day) to instantly know:
 
 ### Month 1 Goals
 - 1,000+ unique visitors
-- 500+ notification sign-ups
 - 100+ social shares
 - Accurate live/rerun detection
+- Active community reporting
 
 ### Month 3 Goals
 - 10,000+ unique visitors
-- 5,000+ active notification subscribers
 - 1,000+ weekly social shares
+- High community reporting accuracy
 - Media mentions in comedy/entertainment blogs
 
 ### Long-term Vision
@@ -240,34 +235,27 @@ Users visit the site on Saturday (or any day) to instantly know:
 
 ---
 
-## Technical Architecture Notes (Non-Technical Implementation)
+## Technical Architecture
 
-### Frontend (Easy Deployment)
+### Frontend
 - **Next.js with Static Export**: Modern React framework that builds to static files
 - **Google Material Design 3**: Using Material-UI (MUI) component library
 - **Tailwind CSS**: For custom styling and responsive design
 - **PWA Kit**: Service worker for offline capability and app-like experience
 - **Social Sharing APIs**: Pre-built integrations for major platforms
 
-### Backend (Serverless & Simple)
+### Backend
 - **Vercel/Netlify Functions**: No server management required
-- **Supabase**: Free database with built-in user auth and real-time features
+- **Simple Database**: JSON files or lightweight database for admin data
 - **Cron Jobs**: Automated data refresh using platform-provided schedulers
-- **SendGrid**: Simple email service for notifications
 - **Canvas API**: Browser-based image generation for social graphics
 
-### Deployment (One-Click Solutions)
+### Deployment
 - **Vercel**: Connect GitHub repo, auto-deploy on every commit
 - **Custom Domain**: Easy to connect your own domain name
 - **SSL/HTTPS**: Automatically provided by hosting platform
 - **Global CDN**: Built-in fast global distribution
 - **Analytics**: Simple integration with Google Analytics or Vercel Analytics
-
-### No-Code Alternatives (If Preferred)
-- **Webflow**: Visual website builder with Material Design templates
-- **Bubble**: No-code app builder with database and API integrations
-- **Glide**: Turn Google Sheets into a web app
-- **Airtable + Softr**: Database + website builder combination
 
 ---
 
@@ -276,7 +264,7 @@ Users visit the site on Saturday (or any day) to instantly know:
 ### Data Accuracy Risks
 - Multiple data source verification
 - Community reporting system
-- Manual override capabilities
+- Manual override capabilities via admin interface
 - Clear disclaimers about accuracy
 
 ### Legal/Copyright Risks
@@ -293,4 +281,4 @@ Users visit the site on Saturday (or any day) to instantly know:
 
 ---
 
-This PRD provides a comprehensive roadmap for building an SNL Live Checker that serves comedy enthusiasts while having genuine viral potential through its social sharing features and delightful user experience. 
+This simplified PRD focuses on core functionality while maintaining the viral potential through social sharing and community engagement, without the complexity of user authentication or SMS notifications. 
