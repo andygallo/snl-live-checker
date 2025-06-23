@@ -279,20 +279,6 @@
         "subtasks": []
       },
       {
-        "id": 16,
-        "title": "Enhance SNL Status Display for Non-Saturday Days",
-        "description": "Modify the status display to show upcoming Saturday information when users visit on non-Saturday days, including a countdown and appropriate messaging based on the day of the week.",
-        "details": "1. Implement day detection logic using JavaScript's Date object to determine current day of week\n2. Create conditional rendering logic for different messaging:\n   - \"Tonight\" for Saturday visits\n   - \"This Saturday\" for Sunday through Friday visits\n3. Extend the data fetching system to retrieve information about upcoming Saturday's show:\n   - Modify existing SWR hooks to fetch future episode data\n   - Implement caching strategy for upcoming show information\n4. Design and implement UI components for non-Saturday display:\n   - Countdown timer showing days/hours until next Saturday's show\n   - Clear visual indication of \"upcoming\" vs \"current\" status\n   - Appropriate messaging for live shows vs reruns\n5. Update the status indicator component to handle both current and future show states\n6. Implement fallback logic for cases where future show information is unavailable\n7. Ensure all new UI elements maintain accessibility standards\n8. Add appropriate animations for countdown timer\n9. Optimize the implementation to minimize unnecessary re-renders\n10. Update global state management to include upcoming show information",
-        "testStrategy": "1. Write unit tests for day detection logic covering all days of the week\n2. Test conditional rendering for Saturday vs non-Saturday visits\n3. Create mock data for upcoming shows and verify correct display\n4. Test countdown timer accuracy and display formatting\n5. Verify appropriate messaging for different scenarios (live show, rerun, TBA)\n6. Test edge cases such as:\n   - Saturday at 11:30 PM ET (during show)\n   - Saturday before and after show\n   - Friday night close to Saturday\n   - When no upcoming show information is available\n7. Perform cross-browser testing to ensure consistent date handling\n8. Verify accessibility of new components using screen readers\n9. Test responsive design on various device sizes\n10. Perform end-to-end tests simulating different days of the week",
-        "status": "pending",
-        "dependencies": [
-          2,
-          3
-        ],
-        "priority": "high",
-        "subtasks": []
-      },
-      {
         "id": 17,
         "title": "Implement Day Detection and Upcoming Saturday Information Display",
         "description": "Enhance the SNL status display to show upcoming Saturday information when users visit on non-Saturday days, including a countdown timer and appropriate messaging based on the day of the week.",
