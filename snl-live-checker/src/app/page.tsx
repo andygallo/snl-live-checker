@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Typography } from '@mui/material';
 import { 
   LiveStatusDisplay, 
   HostGuestInfo, 
@@ -74,6 +75,25 @@ export default function Home() {
   const isLiveFromData = state.snlData?.isLive ?? null;
   const isLiveFromTime = checkIsLive();
   const isLive = isTestMode || (isLiveFromSchedule ?? isLiveFromData ?? isLiveFromTime);
+  
+  // Determine if there's a new episode this week
+  const hasNewEpisodeThisWeek = () => {
+    // For now, assume there's always a new episode unless it's a known break period
+    // TODO: This should be enhanced with actual episode schedule data
+    const now = new Date();
+    const month = now.getMonth(); // 0-11
+    
+    // Typical SNL break periods (rough approximation)
+    const isInBreakPeriod = (
+      (month >= 5 && month <= 8) || // June-September (summer break)
+      (month === 11 && now.getDate() > 20) || // Late December (holiday break)
+      (month === 0 && now.getDate() < 15) // Early January (holiday break)
+    );
+    
+    return !isInBreakPeriod;
+  };
+  
+  const isNewEpisode = hasNewEpisodeThisWeek();
   
   // Get host and musical guest from enhanced schedule or fallback data
   const currentHost = currentShow?.host || nextShow?.host || state.host?.name || state.snlData?.host?.name || "Timothée Chalamet";
@@ -174,17 +194,85 @@ export default function Home() {
           transition={{ duration: 1 }}
         >
           
-          <SNLLogo />
-          
-          <EnhancedStatusDisplay 
-            isLive={isLive} 
-          />
+          {/* Main Title */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-8"
+          >
+            <Typography
+              variant="h2"
+              component="h1"
+              className="neon-text-pink"
+              sx={{
+                fontWeight: 'bold',
+                fontSize: { xs: '2rem', md: '3rem' },
+                fontFamily: '"Orbitron", "Roboto Mono", monospace',
+                textAlign: 'center',
+                mb: 4
+              }}
+            >
+              Is Saturday Night Live this week?
+            </Typography>
+            
+            {/* Big YES/NO Answer */}
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.5, duration: 0.6, type: "spring" }}
+            >
+                             <Typography
+                 variant="h1"
+                 component="div"
+                 className={isNewEpisode ? "neon-text-green" : "neon-text-red"}
+                 sx={{
+                   fontWeight: 'bold',
+                   fontSize: { xs: '4rem', md: '6rem' },
+                   fontFamily: '"Orbitron", "Roboto Mono", monospace',
+                   textAlign: 'center',
+                   textShadow: isNewEpisode 
+                     ? '0 0 20px #00ff00, 0 0 40px #00ff00' 
+                     : '0 0 20px #ff0000, 0 0 40px #ff0000',
+                   mb: 2
+                 }}
+                 role="alert"
+                 aria-live="assertive"
+               >
+                 {isNewEpisode ? "YES!" : "NO"}
+               </Typography>
+               <Typography
+                 variant="h6"
+                 sx={{
+                   color: 'rgba(255, 255, 255, 0.8)',
+                   fontSize: { xs: '1rem', md: '1.25rem' },
+                   textAlign: 'center',
+                   mb: 4
+                 }}
+               >
+                 {isLive 
+                   ? "It's live right now!" 
+                   : isNewEpisode 
+                     ? "New episode this Saturday" 
+                     : "No new episode this week"}
+               </Typography>
+            </motion.div>
+          </motion.div>
 
-          <HostGuestInfo 
-            isLive={isLive}
-            host={currentHost}
-            musicalGuest={currentMusicalGuest}
-          />
+          {(isNewEpisode || isLive) && (
+            <HostGuestInfo 
+              isLive={isLive}
+              isNewEpisode={isNewEpisode}
+              host={currentHost}
+              musicalGuest={currentMusicalGuest}
+            />
+          )}
+          
+          {(isNewEpisode || isLive) && (
+            <EnhancedStatusDisplay 
+              isLive={isLive} 
+            />
+          )}
 
         </motion.div>
 

@@ -251,20 +251,7 @@ export const EnhancedStatusDisplay: React.FC<EnhancedStatusDisplayProps> = ({
               </Typography>
             </Box>
 
-            {/* Day Indicator */}
-            <Box display="flex" justifyContent="center" mb={3}>
-              <Chip
-                label={`Today is ${dayInfo.dayName}`}
-                sx={{
-                  backgroundColor: dayInfo.isSaturday ? 'rgba(255, 0, 0, 0.2)' : 'rgba(33, 150, 243, 0.2)',
-                  color: dayInfo.isSaturday ? '#ff6b6b' : '#64b5f6',
-                  border: `1px solid ${dayInfo.isSaturday ? '#ff6b6b' : '#64b5f6'}`,
-                  fontFamily: '"Orbitron", "Roboto Mono", monospace',
-                  fontWeight: 'bold'
-                }}
-                icon={<CalendarToday />}
-              />
-            </Box>
+
 
             {/* Countdown Timer */}
             <Box textAlign="center" mb={3}>
@@ -289,35 +276,7 @@ export const EnhancedStatusDisplay: React.FC<EnhancedStatusDisplayProps> = ({
               />
             </Box>
 
-            {/* Show Details */}
-            <Box textAlign="center">
-              <Box display="flex" alignItems="center" justifyContent="center" gap={1} mb={1}>
-                <CalendarToday sx={{ color: '#00ffff', fontSize: 18 }} />
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: 'rgba(255, 255, 255, 0.9)',
-                    fontSize: { xs: '0.75rem', md: '0.875rem' },
-                    fontFamily: '"Orbitron", "Roboto Mono", monospace',
-                  }}
-                >
-                  {formatDate(dayInfo.upcomingSaturday)}
-                </Typography>
-              </Box>
-              <Box display="flex" alignItems="center" justifyContent="center" gap={1}>
-                <Schedule sx={{ color: '#00ffff', fontSize: 18 }} />
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: 'rgba(255, 255, 255, 0.9)',
-                    fontSize: { xs: '0.75rem', md: '0.875rem' },
-                    fontFamily: '"Orbitron", "Roboto Mono", monospace',
-                  }}
-                >
-                  {formatTime(dayInfo.upcomingSaturday)}
-                </Typography>
-              </Box>
-            </Box>
+
           </Paper>
         </motion.div>
       )}

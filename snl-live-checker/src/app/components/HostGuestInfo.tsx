@@ -6,12 +6,14 @@ import { Person, MusicNote } from '@mui/icons-material';
 
 interface HostGuestInfoProps {
   isLive: boolean;
+  isNewEpisode?: boolean;
   host?: string;
   musicalGuest?: string;
 }
 
 export default function HostGuestInfo({ 
   isLive, 
+  isNewEpisode = true,
   host = "Timothée Chalamet", 
   musicalGuest = "Boygenius" 
 }: HostGuestInfoProps) {
@@ -64,9 +66,9 @@ export default function HostGuestInfo({
               textAlign: 'center',
               fontWeight: 'medium',
             }}
-            aria-label={`Tonight's host is ${isLive ? host : "Classic Episode"}`}
+            aria-label={`Tonight's host is ${isLive ? host : isNewEpisode ? host : "Classic Episode"}`}
           >
-            {isLive ? host : "Classic Episode"}
+            {isLive ? host : isNewEpisode ? host : "Classic Episode"}
           </Typography>
         </Paper>
       </motion.div>
@@ -115,9 +117,9 @@ export default function HostGuestInfo({
               textAlign: 'center',
               fontWeight: 'medium',
             }}
-            aria-label={`Musical guest is ${isLive ? musicalGuest : "Classic Performance"}`}
+            aria-label={`Musical guest is ${isLive ? musicalGuest : isNewEpisode ? musicalGuest : "Classic Performance"}`}
           >
-            {isLive ? musicalGuest : "Classic Performance"}
+            {isLive ? musicalGuest : isNewEpisode ? musicalGuest : "Classic Performance"}
           </Typography>
         </Paper>
       </motion.div>
