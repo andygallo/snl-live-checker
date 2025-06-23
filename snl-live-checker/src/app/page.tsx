@@ -152,8 +152,22 @@ export default function Home() {
         onToggle={setIsTestMode} 
       />
 
+      {/* Skip to main content link for screen readers */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-blue-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+        tabIndex={0}
+      >
+        Skip to main content
+      </a>
+
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
+      <main 
+        id="main-content"
+        className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4"
+        role="main"
+        aria-label="SNL Live Status Information"
+      >
         
         {/* Art Deco Frame */}
         <motion.div 
@@ -195,7 +209,7 @@ export default function Home() {
             />
           </motion.div>
         )}
-      </div>
+      </main>
     </div>
   );
 }
