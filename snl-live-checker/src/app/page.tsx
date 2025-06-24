@@ -9,7 +9,8 @@ import {
   TestModeToggle, 
   RetroBackground, 
   SNLLogo,
-  LoadingSkeleton
+  LoadingSkeleton,
+  RerunModeDisplay
 } from './components';
 import { EnhancedStatusDisplay } from './components/EnhancedStatusDisplay';
 import { useSNLData, useScheduleData } from '../hooks/useSNLData';
@@ -272,6 +273,17 @@ export default function Home() {
               season={currentShow?.season || nextShow?.season || 50}
               episode={currentShow?.episode || nextShow?.episode || 10}
               airDate={enhancedNextSNLDate}
+            />
+          )}
+
+          {/* Rerun Mode Display - Show when there's no new episode */}
+          {!isNewEpisode && !isLive && (
+            <RerunModeDisplay 
+              nextEpisodeDate={enhancedNextSNLDate}
+              nextHost={nextShow?.host || "TBA"}
+              nextMusicalGuest={nextShow?.musicalGuest || "TBA"}
+              season={nextShow?.season || 50}
+              episode={nextShow?.episode || 11}
             />
           )}
 

@@ -6,4 +6,5 @@ export { default as SNLLogo } from './SNLLogo';
 export { default as LoadingSkeleton } from './LoadingSkeleton';
 export { ErrorBoundary } from './ErrorBoundary';
 export { default as SWRProvider } from './SWRProvider';
-export { ThemeProvider } from './ThemeProvider'; 
+export { ThemeProvider } from './ThemeProvider';
+export { RerunModeDisplay } from './RerunModeDisplay'; 
