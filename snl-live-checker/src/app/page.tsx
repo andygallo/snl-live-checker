@@ -274,7 +274,7 @@ export default function Home() {
                      : isNewEpisode 
                        ? '0 0 20px #00ff00, 0 0 40px #00ff00'
                        : '0 0 20px #ff8800, 0 0 40px #ff8800',
-                   mb: 1
+                   mb: 4
                  }}
                  role="alert"
                  aria-live="assertive"
