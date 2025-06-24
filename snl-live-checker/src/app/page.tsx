@@ -10,15 +10,17 @@ import {
   RetroBackground, 
   SNLLogo,
   LoadingSkeleton,
-  RerunModeDisplay
+  RerunModeDisplay,
+  OnBreakDisplay
 } from './components';
+import type { TestMode } from './components';
 import { EnhancedStatusDisplay } from './components/EnhancedStatusDisplay';
 import { useSNLData, useScheduleData } from '../hooks/useSNLData';
 import { useSNLContext } from '../context/SNLContext';
 import { getNextLiveShow, getCurrentShow, isCurrentlyLive as checkIsLive } from '../utils/scheduleUtils';
 
 export default function Home() {
-  const [isTestMode, setIsTestMode] = useState(false);
+  const [testMode, setTestMode] = useState<TestMode>('off');
   const [mounted, setMounted] = useState(false);
   
   // Real-time data fetching
@@ -71,30 +73,54 @@ export default function Home() {
   const currentShow = getCurrentShow(state.schedule);
   const nextShow = getNextLiveShow(state.schedule);
   
-  // Determine live status - use enhanced schedule data
+  // Determine live status based on test mode or real data
   const isLiveFromSchedule = currentShow?.isLive ?? null;
   const isLiveFromData = state.snlData?.isLive ?? null;
   const isLiveFromTime = checkIsLive();
-  const isLive = isTestMode || (isLiveFromSchedule ?? isLiveFromData ?? isLiveFromTime);
+  const isLive = testMode === 'new-episode' || (testMode === 'off' && (isLiveFromSchedule ?? isLiveFromData ?? isLiveFromTime));
   
-  // Determine if there's a new episode this week
-  const hasNewEpisodeThisWeek = () => {
-    // For now, assume there's always a new episode unless it's a known break period
-    // TODO: This should be enhanced with actual episode schedule data
-    const now = new Date();
-    const month = now.getMonth(); // 0-11
-    
-    // Typical SNL break periods (rough approximation)
-    const isInBreakPeriod = (
-      (month >= 5 && month <= 8) || // June-September (summer break)
-      (month === 11 && now.getDate() > 20) || // Late December (holiday break)
-      (month === 0 && now.getDate() < 15) // Early January (holiday break)
-    );
-    
-    return !isInBreakPeriod;
+  // Determine show state based on test mode or real data
+  const getShowState = () => {
+    switch (testMode) {
+      case 'new-episode':
+        return { isLive: true, isNewEpisode: true, isOnBreak: false };
+      case 'rerun':
+        return { isLive: false, isNewEpisode: false, isOnBreak: false };
+      case 'on-break':
+        return { isLive: false, isNewEpisode: false, isOnBreak: true };
+      case 'off':
+      default:
+        // Real data logic
+        const now = new Date();
+        const month = now.getMonth(); // 0-11
+        
+        // Check for typical SNL break periods
+        const isInBreakPeriod = (
+          (month >= 5 && month <= 8) || // June-September (summer break)
+          (month === 11 && now.getDate() > 20) || // Late December (holiday break)
+          (month === 0 && now.getDate() < 15) // Early January (holiday break)
+        );
+        
+        if (isInBreakPeriod) {
+          return { isLive: false, isNewEpisode: false, isOnBreak: true };
+        }
+        
+        // Check if currently live
+        const realIsLive = isLiveFromSchedule ?? isLiveFromData ?? isLiveFromTime;
+        
+        // Assume new episode unless we have data indicating otherwise
+        const hasNewEpisode = true; // TODO: enhance with actual episode data
+        
+        return { 
+          isLive: realIsLive, 
+          isNewEpisode: hasNewEpisode, 
+          isOnBreak: false 
+        };
+    }
   };
   
-  const isNewEpisode = hasNewEpisodeThisWeek();
+  const showState = getShowState();
+  const { isLive: finalIsLive, isNewEpisode, isOnBreak } = showState;
   
   // Get host and musical guest from enhanced schedule or fallback data
   const currentHost = currentShow?.host || nextShow?.host || state.host?.name || state.snlData?.host?.name || "Timothée Chalamet";
@@ -161,7 +187,7 @@ export default function Home() {
   }
 
   // Show loading skeleton while data is being fetched for the first time
-  if (state.isLoading && !state.snlData && !isTestMode) {
+  if (state.isLoading && !state.snlData && testMode === 'off') {
     return (
       <div className="retro-container">
         <RetroBackground />
@@ -175,8 +201,8 @@ export default function Home() {
       <RetroBackground />
       
       <TestModeToggle 
-        isTestMode={isTestMode} 
-        onToggle={setIsTestMode} 
+        testMode={testMode} 
+        onModeChange={setTestMode} 
       />
 
       {/* Skip to main content link for screen readers */}
@@ -237,13 +263,13 @@ export default function Home() {
                <Typography
                  variant="h1"
                  component="div"
-                 className={isLive ? "neon-text-red" : isNewEpisode ? "neon-text-green" : "neon-text-orange"}
+                 className={finalIsLive ? "neon-text-red" : isNewEpisode ? "neon-text-green" : "neon-text-orange"}
                  sx={{
                    fontWeight: 'bold',
                    fontSize: { xs: '2.5rem', md: '3.5rem' },
                    fontFamily: '"Orbitron", "Roboto Mono", monospace',
                    textAlign: 'center',
-                   textShadow: isLive 
+                   textShadow: finalIsLive 
                      ? '0 0 20px #ff0000, 0 0 40px #ff0000' 
                      : isNewEpisode 
                        ? '0 0 20px #00ff00, 0 0 40px #00ff00'
@@ -253,31 +279,31 @@ export default function Home() {
                  role="alert"
                  aria-live="assertive"
                >
-                 {isLive ? "YES!" : isNewEpisode ? "YES!" : "NOPE!"}
+                 {finalIsLive ? "YES!" : isNewEpisode ? "YES!" : isOnBreak ? "ON BREAK" : "NOPE!"}
                </Typography>
             </motion.div>
           </motion.div>
 
-          {(isNewEpisode || isLive) && (
-            <HostGuestInfo 
-              isLive={isLive}
-              isNewEpisode={isNewEpisode}
-              host={currentHost}
-              musicalGuest={currentMusicalGuest}
-            />
-          )}
-          
-          {(isNewEpisode || isLive) && (
-            <EnhancedStatusDisplay 
-              isLive={isLive}
-              season={currentShow?.season || nextShow?.season || 50}
-              episode={currentShow?.episode || nextShow?.episode || 10}
-              airDate={enhancedNextSNLDate}
-            />
-          )}
-
-          {/* Rerun Mode Display - Show when there's no new episode */}
-          {!isNewEpisode && !isLive && (
+          {/* Show different content based on current state */}
+          {isOnBreak ? (
+            <OnBreakDisplay />
+          ) : (isNewEpisode || finalIsLive) ? (
+            <>
+              <HostGuestInfo 
+                isLive={finalIsLive}
+                isNewEpisode={isNewEpisode}
+                host={currentHost}
+                musicalGuest={currentMusicalGuest}
+              />
+              
+              <EnhancedStatusDisplay 
+                isLive={finalIsLive}
+                season={currentShow?.season || nextShow?.season || 50}
+                episode={currentShow?.episode || nextShow?.episode || 10}
+                airDate={enhancedNextSNLDate}
+              />
+            </>
+          ) : (
             <RerunModeDisplay 
               nextEpisodeDate={enhancedNextSNLDate}
               nextHost={nextShow?.host || "TBA"}
