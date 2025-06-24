@@ -10,6 +10,9 @@ import Countdown from 'react-countdown';
 interface EnhancedStatusDisplayProps {
   isLive: boolean;
   className?: string;
+  season?: number;
+  episode?: number;
+  airDate?: Date;
 }
 
 interface CountdownRendererProps {
@@ -107,7 +110,10 @@ const EnhancedCountdownRenderer = ({ days, hours, minutes, seconds, completed, d
 
 export const EnhancedStatusDisplay: React.FC<EnhancedStatusDisplayProps> = ({
   isLive,
-  className = ""
+  className = "",
+  season = 50,
+  episode = 10,
+  airDate
 }) => {
   const [dayInfo, setDayInfo] = useState<DayDetectionResult | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -169,8 +175,21 @@ export const EnhancedStatusDisplay: React.FC<EnhancedStatusDisplayProps> = ({
             boxShadow: isLive ? '0 0 30px rgba(255, 0, 0, 0.3)' : 'none',
           }}
         >
-          {/* Date and Time Information */}
+          {/* Season and Episode Information */}
           <Box textAlign="center" mb={2}>
+            <Typography
+              variant="h6"
+              className="neon-text-cyan"
+              sx={{
+                fontWeight: 'bold',
+                fontSize: { xs: '0.875rem', md: '1rem' },
+                fontFamily: '"Orbitron", "Roboto Mono", monospace',
+                mb: 1
+              }}
+              component="h2"
+            >
+              Season {season} • Episode {episode}
+            </Typography>
             <Typography
               variant="h5"
               className={isLive ? "neon-text-red" : "neon-text-cyan"}
@@ -180,9 +199,8 @@ export const EnhancedStatusDisplay: React.FC<EnhancedStatusDisplayProps> = ({
                 fontFamily: '"Orbitron", "Roboto Mono", monospace',
                 mb: 1
               }}
-              component="h2"
             >
-              {isLive ? "ON AIR NOW" : formatDate(dayInfo.upcomingSaturday)}
+              {isLive ? "ON AIR NOW" : formatDate(airDate || dayInfo.upcomingSaturday)}
             </Typography>
             <Typography
               variant="body1"
@@ -192,7 +210,7 @@ export const EnhancedStatusDisplay: React.FC<EnhancedStatusDisplayProps> = ({
                 fontFamily: '"Orbitron", "Roboto Mono", monospace',
               }}
             >
-              {isLive ? "Saturday Night Live is broadcasting" : `${formatTime(dayInfo.upcomingSaturday)} • 90 minutes`}
+              {isLive ? "" : `${formatTime(airDate || dayInfo.upcomingSaturday)} • 90 minutes`}
             </Typography>
           </Box>
 

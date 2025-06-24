@@ -87,31 +87,36 @@ export default function HostGuestInfo({
 
       {/* Host and Musical Guest in horizontal layout */}
       <motion.div
-        className="flex flex-col md:flex-row gap-8 justify-center items-center"
+        className="flex flex-col md:flex-row gap-6 justify-center items-stretch"
         initial={{ y: 30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 2, duration: 0.8 }}
       >
         {/* Host Info */}
         <Paper
-          className="retro-card flex-1 max-w-xs"
+          className="retro-card flex-1"
           elevation={3}
           sx={{
             background: 'linear-gradient(45deg, rgba(0, 188, 212, 0.1), rgba(0, 150, 136, 0.1))',
             border: '1px solid rgba(0, 188, 212, 0.3)',
             borderRadius: '12px',
-            padding: '12px',
+            padding: '16px',
             backdropFilter: 'blur(8px)',
+            maxWidth: { xs: '280px', md: '300px' },
+            minHeight: '140px',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
-          <Box display="flex" flexDirection="column" alignItems="center" gap={1}>
+          <Box display="flex" flexDirection="column" alignItems="center" gap={1.5} width="100%">
             <Avatar 
               src={hostImage}
               sx={{ 
                 bgcolor: '#00bcd4', 
-                width: { xs: 60, md: 80 }, 
-                height: { xs: 60, md: 80 },
-                border: '2px solid rgba(0, 188, 212, 0.5)'
+                width: { xs: 70, md: 85 }, 
+                height: { xs: 70, md: 85 },
+                border: '2px solid rgba(0, 188, 212, 0.5)',
+                boxShadow: '0 0 15px rgba(0, 188, 212, 0.3)'
               }}
             >
               <Person />
@@ -136,34 +141,40 @@ export default function HostGuestInfo({
                 fontSize: { xs: '0.75rem', md: '0.875rem' },
                 textAlign: 'center',
                 fontWeight: 'medium',
+                lineHeight: 1.2,
               }}
               aria-label={`Tonight's host is ${displayHost}`}
             >
-              {displayHost}
+              {displayHost === "TBA" ? "TBA" : displayHost}
             </Typography>
           </Box>
         </Paper>
 
         {/* Musical Guest */}
         <Paper
-          className="retro-card flex-1 max-w-xs"
+          className="retro-card flex-1"
           elevation={3}
           sx={{
             background: 'linear-gradient(45deg, rgba(156, 39, 176, 0.1), rgba(233, 30, 99, 0.1))',
             border: '1px solid rgba(156, 39, 176, 0.3)',
             borderRadius: '12px',
-            padding: '12px',
+            padding: '16px',
             backdropFilter: 'blur(8px)',
+            maxWidth: { xs: '280px', md: '300px' },
+            minHeight: '140px',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
-          <Box display="flex" flexDirection="column" alignItems="center" gap={1}>
+          <Box display="flex" flexDirection="column" alignItems="center" gap={1.5} width="100%">
             <Avatar 
               src={guestImage}
               sx={{ 
                 bgcolor: '#9c27b0', 
-                width: { xs: 60, md: 80 }, 
-                height: { xs: 60, md: 80 },
-                border: '2px solid rgba(156, 39, 176, 0.5)'
+                width: { xs: 70, md: 85 }, 
+                height: { xs: 70, md: 85 },
+                border: '2px solid rgba(156, 39, 176, 0.5)',
+                boxShadow: '0 0 15px rgba(156, 39, 176, 0.3)'
               }}
             >
               <MusicNote />
@@ -178,7 +189,7 @@ export default function HostGuestInfo({
                 textAlign: 'center',
               }}
             >
-              MUSICAL GUEST
+              MUSICAL<br />GUEST
             </Typography>
             <Typography
               variant="body1"
@@ -188,10 +199,11 @@ export default function HostGuestInfo({
                 fontSize: { xs: '0.75rem', md: '0.875rem' },
                 textAlign: 'center',
                 fontWeight: 'medium',
+                lineHeight: 1.2,
               }}
               aria-label={`Musical guest is ${displayGuest}`}
             >
-              {displayGuest}
+              {displayGuest === "TBA" ? "TBA" : displayGuest}
             </Typography>
           </Box>
         </Paper>

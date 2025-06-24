@@ -223,7 +223,7 @@ export default function Home() {
                 lineHeight: 1.2
               }}
             >
-              Is Saturday Night<br />Live this week?
+              Is Saturday Night<br />live this Week?
             </Typography>
             
             {/* Big YES/NO Answer */}
@@ -268,7 +268,10 @@ export default function Home() {
           
           {(isNewEpisode || isLive) && (
             <EnhancedStatusDisplay 
-              isLive={isLive} 
+              isLive={isLive}
+              season={currentShow?.season || nextShow?.season || 50}
+              episode={currentShow?.episode || nextShow?.episode || 10}
+              airDate={enhancedNextSNLDate}
             />
           )}
 
