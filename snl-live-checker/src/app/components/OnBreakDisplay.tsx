@@ -106,21 +106,6 @@ export const OnBreakDisplay: React.FC<OnBreakDisplayProps> = ({
         </motion.div>
         
         <Typography
-          variant="h2"
-          className="neon-text-yellow"
-          sx={{
-            fontWeight: 'bold',
-            fontSize: { xs: '2rem', md: '3rem' },
-            fontFamily: '"Orbitron", "Roboto Mono", monospace',
-            mb: 2,
-            mt: 2
-          }}
-          component="h1"
-        >
-          {breakConfig.title}
-        </Typography>
-        
-        <Typography
           variant="h5"
           sx={{
             color: 'rgba(255, 255, 255, 0.9)',
@@ -149,22 +134,6 @@ export const OnBreakDisplay: React.FC<OnBreakDisplayProps> = ({
         }}
       >
         <Box display="flex" flexDirection="column" gap={3}>
-          {/* Quote */}
-          <Box textAlign="center">
-            <Typography
-              variant="h6"
-              sx={{
-                color: breakConfig.color,
-                fontStyle: 'italic',
-                fontSize: { xs: '1rem', md: '1.1rem' },
-                fontFamily: '"Orbitron", "Roboto Mono", monospace',
-                textShadow: `0 0 10px ${breakConfig.color}50`
-              }}
-            >
-              {breakConfig.quote}
-            </Typography>
-          </Box>
-
           {/* Return Information */}
           <Box 
             display="flex" 

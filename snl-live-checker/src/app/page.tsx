@@ -200,11 +200,6 @@ export default function Home() {
     <div className="retro-container">
       <RetroBackground />
       
-      <TestModeToggle 
-        testMode={testMode} 
-        onModeChange={setTestMode} 
-      />
-
       {/* Skip to main content link for screen readers */}
       <a 
         href="#main-content" 

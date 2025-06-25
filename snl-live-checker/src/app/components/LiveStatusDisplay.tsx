@@ -249,20 +249,7 @@ export default function LiveStatusDisplay({ isLive, nextSNLDate }: LiveStatusDis
               }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              <Typography
-                variant="h2"
-                component="h3"
-                className="neon-text-yellow"
-                sx={{
-                  fontWeight: 'bold',
-                  fontSize: { xs: '2rem', md: '3rem' },
-                  textAlign: 'center',
-                }}
-                aria-live="assertive"
-                role="alert"
-              >
-                ON AIR NOW!
-              </Typography>
+              {/* Removed 'ON AIR NOW!' text for a cleaner look */}
             </motion.div>
           </Paper>
         )}
