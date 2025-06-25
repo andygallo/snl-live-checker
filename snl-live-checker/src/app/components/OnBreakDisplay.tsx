@@ -239,33 +239,54 @@ export const OnBreakDisplay: React.FC<OnBreakDisplayProps> = ({
           💡 While You Wait...
         </Typography>
         <Box display="flex" flexDirection={{ xs: 'column', sm: 'row' }} gap={2} justifyContent="center">
-          <Chip
-            label="📺 Watch Classic Episodes"
-            variant="outlined"
-            sx={{
-              color: 'rgba(255, 255, 255, 0.8)',
-              borderColor: 'rgba(255, 255, 255, 0.3)',
-              '&:hover': { borderColor: '#00ffff', color: '#00ffff' }
-            }}
-          />
-          <Chip
-            label="🎭 Follow Cast on Social"
-            variant="outlined"
-            sx={{
-              color: 'rgba(255, 255, 255, 0.8)',
-              borderColor: 'rgba(255, 255, 255, 0.3)',
-              '&:hover': { borderColor: '#ff6b9d', color: '#ff6b9d' }
-            }}
-          />
-          <Chip
-            label="📚 Read SNL History"
-            variant="outlined"
-            sx={{
-              color: 'rgba(255, 255, 255, 0.8)',
-              borderColor: 'rgba(255, 255, 255, 0.3)',
-              '&:hover': { borderColor: '#ffd700', color: '#ffd700' }
-            }}
-          />
+          <a
+            href="https://www.youtube.com/watch?v=HjBc5QDvQV8"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none' }}
+          >
+            <Chip
+              label="📺 Watch Classic Episodes"
+              variant="outlined"
+              sx={{
+                color: 'rgba(255, 255, 255, 0.8)',
+                borderColor: 'rgba(255, 255, 255, 0.3)',
+                '&:hover': { borderColor: '#00ffff', color: '#00ffff', background: 'rgba(0,255,255,0.08)' }
+              }}
+            />
+          </a>
+          <a
+            href="https://www.instagram.com/nbcsnl/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none' }}
+          >
+            <Chip
+              label="🎭 Follow Cast on Social"
+              variant="outlined"
+              sx={{
+                color: 'rgba(255, 255, 255, 0.8)',
+                borderColor: 'rgba(255, 255, 255, 0.3)',
+                '&:hover': { borderColor: '#ff6b9d', color: '#ff6b9d', background: 'rgba(255,107,157,0.08)' }
+              }}
+            />
+          </a>
+          <a
+            href="https://www.barnesandnoble.com/w/live-from-new-york-james-andrew-miller/1119866798"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none' }}
+          >
+            <Chip
+              label="📚 Read SNL History"
+              variant="outlined"
+              sx={{
+                color: 'rgba(255, 255, 255, 0.8)',
+                borderColor: 'rgba(255, 255, 255, 0.3)',
+                '&:hover': { borderColor: '#ffd700', color: '#ffd700', background: 'rgba(255,215,0,0.08)' }
+              }}
+            />
+          </a>
         </Box>
       </Paper>
     </motion.div>
