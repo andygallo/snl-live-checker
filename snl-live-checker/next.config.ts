@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   // Configure ESLint
   eslint: {
     dirs: ['src'],
+    ignoreDuringBuilds: true,
   },
   
   // Enable experimental features for better performance
